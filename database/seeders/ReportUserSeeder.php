@@ -7,17 +7,17 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use DateTime;
 
-class ReportSeeder extends Seeder
+class ReportUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('reports')->insert([
+        DB::table('report_user')->insert([
             'user_id' => 1,
-            'menu_id' => 3,
-            'category_id' => 1,
+            'report_id' => 1,
+            'created_at' => new DateTime(),
         ]);
     }
 }
