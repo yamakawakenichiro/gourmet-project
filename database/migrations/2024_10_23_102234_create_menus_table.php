@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('image', 100)->nullable();
             $table->integer('price');
-            $table->integer('eaten_count')->default(0);
+            $table->integer('count')->default(0);
             $table->text('body', 200);
             $table->timestamps();
             $table->softDeletes();
