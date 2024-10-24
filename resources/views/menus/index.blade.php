@@ -13,9 +13,11 @@
     <div class='menus'>
         @foreach ($menus as $menu)
         <div class='menu'>
-            <h2 class='shop_id'>shop_id:{{ $menu->shop_id }}</h2>
-            <p class='name'>{{ $menu->name }}</p>
-            <p class='count'>{{ $menu->count }}</p>
+            <a href="/menus/{{ $menu->id }}">
+                <h2 class='shop_id'>shop_id:{{ $menu->shop_id }}</h2>
+                <p class='name'>{{ $menu->name }}</p>
+                <p class='count'>{{ $menu->count }}</p>
+            </a>
         </div>
         @endforeach
     </div>

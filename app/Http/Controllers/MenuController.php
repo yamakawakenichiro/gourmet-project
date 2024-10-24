@@ -11,4 +11,8 @@ class MenuController extends Controller
     {
         return view('menus.index')->with(['menus' => $menu->getPaginateByLimit()]);
     }
+    public function show(Menu $menu)
+    {
+        return view('menus.show')->with(['menu' => $menu]);
+    }
 }

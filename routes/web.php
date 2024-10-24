@@ -17,6 +17,7 @@ use App\Models\Menu;
 */
 
 Route::get('/', [MenuController::class, 'index']);
+Route::get('/menus/{menu}', [MenuController::class, 'show']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
