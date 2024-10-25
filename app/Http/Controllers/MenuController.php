@@ -25,7 +25,26 @@ class MenuController extends Controller
     }
     public function store(MenuRequest $request, Menu $menu, Shop $shop)
     {
-        Log::info('Store method accessed by user: ' . Auth::id());
+        //shopsに同一のshop_nameが存在しない場合、shopsにshop_nameを保存
+        $shop_name = $request->input('menu.shop_name');
+        $existing_shop = Shop::where('name', $shop_name)->first();
+        if (!$existing_shop) {
+            $shop->user_id = Auth::id();
+            $shop->name = $shop_name;
+            $shop->save();
+        }
+
+        $input = $request['menu'];
+        $menu->user_id = Auth::id();
+        $menu->fill($input)->save();
+        return redirect('/menus/' . $menu->id);
+    }
+    public function edit(Menu $menu)
+    {
+        return view('menus.edit')->with(['menu' => $menu]);
+    }
+    public function update(MenuRequest $request, Menu $menu, Shop $shop)
+    {
         //shopsに同一のshop_nameが存在しない場合、shopsにshop_nameを保存
         $shop_name = $request->input('menu.shop_name');
         $existing_shop = Shop::where('name', $shop_name)->first();

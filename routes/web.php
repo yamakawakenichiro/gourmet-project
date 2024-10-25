@@ -20,6 +20,8 @@ Route::get('/', [MenuController::class, 'index'])->name('index');
 Route::get('/menus/create', [MenuController::class, 'create'])->name('create');
 Route::get('/menus/{menu}', [MenuController::class, 'show'])->name('show');
 Route::post('/menus', [MenuController::class, 'store'])->name('store');
+Route::get('/menus/{menu}/edit', [MenuController::class, 'edit']);
+Route::put('/menus/{menu}', [MenuController::class, 'update']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -10,6 +10,11 @@
 </head>
 
 <body>
+    <!-- ログインユーザーかつ、自分の投稿詳細のみ編集ボタンを表示 -->
+    @if (Auth::id() === $menu->user_id)
+    <div class="edit"><a href='/menus/{{ $menu->id }}/edit'>編集</a></div>
+    @endif
+
     <div class="image">
         <p>画像をアップロードしますか？</p>
         <img src="{{ $menu->image }}" alt="Menu画像">
