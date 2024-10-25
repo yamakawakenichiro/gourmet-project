@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Menus</title>
+    <title>グルメモ</title>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 </head>
@@ -14,9 +14,9 @@
         <p>画像をアップロードしますか？</p>
         <img src="{{ $menu->image }}" alt="Menu画像">
     </div>
-    <div class="shop_id">
+    <div class="shop_name">
         <p>お店の名前はなんですか？</p>
-        <p>{{ $menu->shop_id }}</p>
+        <p>{{ $menu->shop_name }}</p>
     </div>
     <div class="name">
         <p>メニューの名前はなんですか？</p>
