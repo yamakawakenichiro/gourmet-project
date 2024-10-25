@@ -10,9 +10,14 @@
 </head>
 
 <body>
-    <!-- ログインユーザーかつ、自分の投稿詳細のみ編集ボタンを表示 -->
+    <!-- ログインユーザーかつ、自分の投稿詳細のみ編集・削除ボタンを表示 -->
     @if (Auth::id() === $menu->user_id)
     <div class="edit"><a href='/menus/{{ $menu->id }}/edit'>編集</a></div>
+    <form action="/menus/{{ $menu->id }}" id="form_{{ $menu->id }}" method="post">
+        @csrf
+        @method('DELETE')
+        <button type="button" onclick="deleteMenu({{ $menu->id }})">削除</button>
+    </form>
     @endif
 
     <div class="image">
@@ -42,6 +47,16 @@
     <div class="footer">
         <a href="/">戻る</a>
     </div>
+
+    <script>
+        function deleteMenu(id) {
+            'use strict'
+
+            if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                document.getElementById(`form_${id}`).submit();
+            }
+        }
+    </script>
 </body>
 
 </html>

@@ -59,4 +59,9 @@ class MenuController extends Controller
         $menu->fill($input)->save();
         return redirect('/menus/' . $menu->id);
     }
+    public function delete(Menu $menu)
+    {
+        $menu->delete();
+        return redirect('/');
+    }
 }
