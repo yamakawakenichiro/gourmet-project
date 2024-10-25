@@ -16,7 +16,7 @@ class MenuSeeder extends Seeder
     {
         DB::table('menus')->insert([
             'user_id' => 1,
-            'shop_id' => 1,
+            'shop_name' => 'マクドナルド',
             'name' => '月見バーガー',
             'image' => '',
             'price' => 800,
@@ -27,7 +27,7 @@ class MenuSeeder extends Seeder
         ]);
         DB::table('menus')->insert([
             'user_id' => 1,
-            'shop_id' => 2,
+            'shop_name' => '松屋',
             'name' => 'キムチ牛丼',
             'image' => '',
             'price' => 700,
@@ -38,7 +38,7 @@ class MenuSeeder extends Seeder
         ]);
         DB::table('menus')->insert([
             'user_id' => 2,
-            'shop_id' => 3,
+            'shop_name' => 'バーガーキング',
             'name' => 'チーズハンバーガー',
             'image' => '',
             'price' => 800,
