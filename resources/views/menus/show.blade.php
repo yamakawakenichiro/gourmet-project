@@ -16,7 +16,7 @@
     <form action="/menus/{{ $menu->id }}" id="form_{{ $menu->id }}" method="post">
         @csrf
         @method('DELETE')
-        <button type="button" onclick="deleteMenu({{ $menu->id }})">削除</button>
+        <button type="button" onclick="deleteMenu('{{ $menu->id }}')">削除</button>
     </form>
     @endif
 
