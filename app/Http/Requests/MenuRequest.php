@@ -26,4 +26,8 @@ class MenuRequest extends FormRequest
             'menu.name' => 'required|string|max:50',
         ];
     }
+    public function userId(): int
+    {
+        return $this->user()->id;
+    }
 }
