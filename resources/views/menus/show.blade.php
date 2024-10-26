@@ -10,13 +10,15 @@
 </head>
 
 <body>
-    <!-- ログインユーザーかつ、自分の投稿詳細のみ編集・削除ボタンを表示 -->
-    @if (Auth::id() === $menu->user_id)
+    {{ $menu->user->name }}
+
+    <!-- ログインユーザーは編集・削除ボタンを表示 -->
+    @if ($menu->user_id === auth()->id())
     <div class="edit"><a href='/menus/{{ $menu->id }}/edit'>編集</a></div>
     <form action="/menus/{{ $menu->id }}" id="form_{{ $menu->id }}" method="post">
         @csrf
         @method('DELETE')
-        <button type="button" onclick="deleteMenu({{ $menu->id }})">削除</button>
+        <button type="button" onclick="deleteMenu('{{ $menu->id }}')">削除</button>
     </form>
     @endif
 

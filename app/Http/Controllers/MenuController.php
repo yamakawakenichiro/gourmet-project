@@ -29,18 +29,21 @@ class MenuController extends Controller
         $shop_name = $request->input('menu.shop_name');
         $existing_shop = Shop::where('name', $shop_name)->first();
         if (!$existing_shop) {
-            $shop->user_id = Auth::id();
+            $shop->user_id = $request->userId();
             $shop->name = $shop_name;
             $shop->save();
         }
 
         $input = $request['menu'];
-        $menu->user_id = Auth::id();
+        $menu->user_id = $request->userId();
         $menu->fill($input)->save();
         return redirect('/menus/' . $menu->id);
     }
     public function edit(Menu $menu)
     {
+        if ($menu->user_id !== Auth::id()) {
+            return redirect()->route('show', $menu);
+        }
         return view('menus.edit')->with(['menu' => $menu]);
     }
     public function update(MenuRequest $request, Menu $menu, Shop $shop)
@@ -49,13 +52,13 @@ class MenuController extends Controller
         $shop_name = $request->input('menu.shop_name');
         $existing_shop = Shop::where('name', $shop_name)->first();
         if (!$existing_shop) {
-            $shop->user_id = Auth::id();
+            $shop->user_id = $request->userId();
             $shop->name = $shop_name;
             $shop->save();
         }
 
         $input = $request['menu'];
-        $menu->user_id = Auth::id();
+        $menu->user_id = $request->userId();
         $menu->fill($input)->save();
         return redirect('/menus/' . $menu->id);
     }
