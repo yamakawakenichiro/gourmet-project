@@ -24,10 +24,15 @@ class ReportController extends Controller
     }
     public function store(ReportRequest $request, Menu $menu, Report $report,)
     {
+        //reportsテーブルに保存
         $input = $request['report'];
         $report->user_id = $request->userId();
         $report->menu_id = $menu->id;
         $report->fill($input)->save();
+
+        //report_user中間テーブルに保存
+        $report->users()->attach($request->userId());
+
         return redirect()->route('show', ['menu' => $menu->id]);
     }
 }

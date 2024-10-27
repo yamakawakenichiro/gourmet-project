@@ -16,4 +16,9 @@ class Report extends Model
         'menu_id',
         'category_id',
     ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
