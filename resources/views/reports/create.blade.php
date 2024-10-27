@@ -11,7 +11,7 @@
 
 <body>
     <div class="content">
-        <form action="/reports" method="POST">
+        <form action="{{ route('report.store', ['menu' => $menu->id]) }}" method="POST">
             @csrf
             <select name="report[category_id]">
                 @foreach ($categories as $category)

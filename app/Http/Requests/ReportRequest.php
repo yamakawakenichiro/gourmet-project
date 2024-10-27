@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MenuRequest extends FormRequest
+class ReportRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,11 +22,9 @@ class MenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'menu.shop_name' => 'required|string|max:50',
-            'menu.name' => 'required|string|max:50',
+            //
         ];
     }
-
     //$request->userId()でリクエストしている人のuser_idを取得をできるようにする
     public function userId(): int
     {

@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <form action="/menus" method="POST">
+    <form action="{{ route('store') }}" method="POST">
         @csrf
         <div class="image">
             <p>画像をアップロードしますか？</p>

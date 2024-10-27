@@ -11,7 +11,7 @@
 
 <body>
     <div class="content">
-        <form action="/menus/{{ $menu->id }}" method="POST">
+        <form action="{{ route('show', ['menu' => $menu->id]) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="image">

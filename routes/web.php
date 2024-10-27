@@ -38,7 +38,7 @@ Route::middleware('auth')->group(function () {
 //報告
 Route::middleware('auth')->group(function () {
     Route::get('/menus/{menu}/report', [ReportController::class, 'create'])->name('report.create');
-    Route::post('/reports', [ReportController::class, 'store'])->name('report.store');
+    Route::post('/reports/{menu}', [ReportController::class, 'store'])->name('report.store');
 });
 
 //ダッシュボード（デフォルト）
