@@ -11,7 +11,7 @@
 
 <body>
     <div class="content">
-        <form action="/menus/{{ $menu->id }}" method="POST">
+        <form action="{{ route('show', ['menu' => $menu->id]) }}" method="POST">
             @csrf
             @method('PUT')
             <div class="image">
@@ -42,6 +42,9 @@
             </div>
             <input type="submit" value="更新" />
         </form>
+        <div class="footer">
+            <a href="{{route('show', ['menu' => $menu->id])}}">戻る</a>
+        </div>
     </div>
 </body>
 

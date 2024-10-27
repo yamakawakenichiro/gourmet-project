@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <form action="/menus" method="POST">
+    <form action="{{ route('store') }}" method="POST">
         @csrf
         <div class="image">
             <p>画像をアップロードしますか？</p>
@@ -38,7 +38,7 @@
         <input type="submit" value="保存" />
     </form>
     <div class="footer">
-        <a href="/">戻る</a>
+        <a href="{{ route('index') }}">戻る</a>
     </div>
 </body>
 

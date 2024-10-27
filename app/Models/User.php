@@ -47,4 +47,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Menu::class);
     }
+    public function reports()
+    {
+        return $this->belongsToMany(Report::class);
+    }
 }

@@ -12,7 +12,8 @@
 <body>
     {{ $menu->user->name }}
 
-    <!-- ログインユーザーは編集・削除ボタンを表示 -->
+    @auth
+    <!-- 自分の投稿の場合は編集・削除ボタンを表示 -->
     @if ($menu->user_id === auth()->id())
     <div class="edit"><a href='/menus/{{ $menu->id }}/edit'>編集</a></div>
     <form action="/menus/{{ $menu->id }}" id="form_{{ $menu->id }}" method="post">
@@ -20,7 +21,11 @@
         @method('DELETE')
         <button type="button" onclick="deleteMenu('{{ $menu->id }}')">削除</button>
     </form>
+    @else
+    <!-- 他人の投稿の場合は報告ボタンを表示 -->
+    <div class="report"><a href='/menus/{{ $menu->id }}/report'>報告</a></div>
     @endif
+    @endauth
 
     <div class="image">
         <p>画像をアップロードしますか？</p>
@@ -47,7 +52,7 @@
         <p>{{ $menu->body }}</p>
     </div>
     <div class="footer">
-        <a href="/">戻る</a>
+        <a href="{{ route('index') }}">戻る</a>
     </div>
 
     <script>
