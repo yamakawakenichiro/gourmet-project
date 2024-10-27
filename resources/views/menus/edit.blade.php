@@ -42,6 +42,9 @@
             </div>
             <input type="submit" value="更新" />
         </form>
+        <div class="footer">
+            <a href="{{route('show', ['menu' => $menu->id])}}">戻る</a>
+        </div>
     </div>
 </body>
 

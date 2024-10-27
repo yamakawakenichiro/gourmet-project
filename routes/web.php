@@ -1,9 +1,15 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\ReportController;
+
 use App\Models\Menu;
+use App\Models\Report;
+
+use Illuminate\Support\Facades\Log;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,20 +22,32 @@ use App\Models\Menu;
 |
 */
 
+//投稿CRUD
 Route::get('/', [MenuController::class, 'index'])->name('index');
-Route::get('/menus/create', [MenuController::class, 'create'])->middleware('auth')->name('create');
 Route::get('/menus/{menu}', [MenuController::class, 'show'])->name('show');
 
+//投稿CRUD（認証）
+Route::middleware('auth')->group(function () {
+    Route::get('/menus/create', [MenuController::class, 'create'])->name('create');
+    Route::post('/menus', [MenuController::class, 'store'])->name('store');
+    Route::get('/menus/{menu}/edit', [MenuController::class, 'edit'])->name('edit');
+    Route::put('/menus/{menu}', [MenuController::class, 'update'])->name('update');
+    Route::delete('/menus/{menu}', [MenuController::class, 'delete'])->name('delete');
+});
+
+//報告
+Route::middleware('auth')->group(function () {
+    Route::get('/menus/{menu}/report', [ReportController::class, 'create'])->name('report.create');
+    Route::post('/reports', [ReportController::class, 'store'])->name('report.store');
+});
+
+//ダッシュボード（デフォルト）
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+//プロファイル（デフォルト）
 Route::middleware('auth')->group(function () {
-    Route::post('/menus', [MenuController::class, 'store'])->middleware('auth')->name('store');
-    Route::get('/menus/{menu}/edit', [MenuController::class, 'edit'])->name('edit');
-    Route::put('/menus/{menu}', [MenuController::class, 'update'])->name('update');
-    Route::delete('/menus/{menu}', [MenuController::class, 'delete'])->name('delete');
-
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

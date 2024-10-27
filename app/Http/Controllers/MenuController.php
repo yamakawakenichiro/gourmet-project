@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\Shop;
+use App\Models\Category;
 use App\Http\Requests\MenuRequest;
+use App\Models\Report;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -37,7 +39,7 @@ class MenuController extends Controller
         $input = $request['menu'];
         $menu->user_id = $request->userId();
         $menu->fill($input)->save();
-        return redirect('/menus/' . $menu->id);
+        return redirect()->route('index');
     }
     public function edit(Menu $menu)
     {
@@ -60,11 +62,11 @@ class MenuController extends Controller
         $input = $request['menu'];
         $menu->user_id = $request->userId();
         $menu->fill($input)->save();
-        return redirect('/menus/' . $menu->id);
+        return redirect()->route('show', ['menu' => $menu->id]);
     }
     public function delete(Menu $menu)
     {
         $menu->delete();
-        return redirect('/');
+        return redirect()->route('index');
     }
 }
