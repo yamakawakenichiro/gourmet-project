@@ -7,15 +7,17 @@ use App\Models\Menu;
 use App\Models\Shop;
 use App\Models\Category;
 use App\Http\Requests\MenuRequest;
+use App\Http\Requests\SearchRequest;
 use App\Models\Report;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class MenuController extends Controller
 {
-    public function index(Menu $menu)
+    public function index(SearchRequest $request, Menu $menu)
     {
-        return view('menus.index')->with(['menus' => $menu->getPaginateByLimit()]);
+        $keyword = $request->input('keyword', '');
+        return view('menus.index')->with(['menus' => $menu->getPaginateByLimit(10, $keyword), 'keyword' => $keyword]);
     }
     public function show(Menu $menu)
     {

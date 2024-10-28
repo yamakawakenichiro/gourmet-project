@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Log;
 
 class Menu extends Model
 {
@@ -20,9 +21,18 @@ class Menu extends Model
         'body',
     ];
 
-    public function getPaginateByLimit(int $limit_count = 10)
+    public function getPaginateByLimit(int $limit_count = 10, $search = null)
     {
-        return $this->orderBy('updated_at', 'DESC')->paginate($limit_count);
+        $query = $this->orderBy('updated_at', 'DESC');
+
+        // 検索処理などで、`0`も有効なキーワードとして扱う
+        if ($search !== '') {
+            $query->where('shop_name', 'LIKE', "%{$search}%")
+                ->orWhere('name', 'LIKE', "%{$search}%")
+                ->orWhere('count', 'LIKE', "%{$search}%");
+        }
+
+        return $query->paginate($limit_count);
     }
 
     public function user()

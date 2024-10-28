@@ -28,6 +28,15 @@
     </div>
     @endif
 
+    {{-- 検索機能ここから --}}
+    <div>
+        <form action="{{ route('index') }}" method="GET">
+            <input type="text" name="keyword" value="{{ $keyword }}">
+            <input type="submit" value="検索">
+        </form>
+    </div>
+    {{--検索機能ここまで--}}
+
 
     <div class='menus'>
         @foreach ($menus as $menu)
