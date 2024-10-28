@@ -19,7 +19,8 @@ class MenuController extends Controller
     }
     public function show(Menu $menu)
     {
-        return view('menus.show')->with(['menu' => $menu]);
+        $like = $menu->like_users()->count();
+        return view('menus.show')->with(['menu' => $menu, 'like' => $like]);
     }
     public function create()
     {

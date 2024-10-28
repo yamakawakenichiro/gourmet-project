@@ -29,4 +29,8 @@ class Menu extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function like_users()
+    {
+        return $this->belongsToMany(User::class, 'likes', 'user_id', 'menu_id');
+    }
 }

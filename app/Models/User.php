@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use PgSql\Lob;
 
 class User extends Authenticatable
 {
@@ -43,6 +44,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    //リレーション
     public function menus()
     {
         return $this->hasMany(Menu::class);
@@ -50,5 +52,39 @@ class User extends Authenticatable
     public function reports()
     {
         return $this->belongsToMany(Report::class);
+    }
+    public function likes()
+    {
+        return $this->belongsToMany(Menu::class, 'likes', 'user_id', 'menu_id');
+    }
+
+    //投稿をいいねしている状態か確認
+    public function is_like($menuId)
+    {
+        return $this->likes()->where('menu_id', $menuId)->exists();
+    }
+    //いいねする
+    public function like(Menu $menu)
+    {
+        $exist = $this->is_like($menu->id);
+
+        if ($exist) {
+            return false;
+        } else {
+            $this->likes()->attach($menu->id);
+            return true;
+        }
+    }
+    //いいね解除
+    public function unlike(Menu $menu)
+    {
+        $exist = $this->is_like($menu->id);
+
+        if ($exist) {
+            $this->likes()->detach($menu->id);
+            return true;
+        } else {
+            return false;
+        }
     }
 }
