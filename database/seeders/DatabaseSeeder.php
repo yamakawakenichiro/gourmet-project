@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,
             LikeSeeder::class,
             ReportSeeder::class,
-            ReportUserSeeder::class,
         ]);
     }
 }
