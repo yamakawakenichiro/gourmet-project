@@ -30,9 +30,6 @@ class ReportController extends Controller
         $report->menu_id = $menu->id;
         $report->fill($input)->save();
 
-        //report_user中間テーブルに保存
-        $report->users()->attach($request->userId());
-
-        return redirect()->route('show', ['menu' => $menu->id]);
+        return redirect()->route('index');
     }
 }

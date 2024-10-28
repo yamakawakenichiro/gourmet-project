@@ -13,6 +13,7 @@
     {{ $menu->user->name }}
 
     @auth
+
     <!-- 自分の投稿の場合は編集・削除ボタンを表示 -->
     @if ($menu->user_id === auth()->id())
     <div class="edit"><a href='/menus/{{ $menu->id }}/edit'>編集</a></div>
@@ -25,6 +26,24 @@
     <!-- 他人の投稿の場合は報告ボタンを表示 -->
     <div class="report"><a href='/menus/{{ $menu->id }}/report'>報告</a></div>
     @endif
+
+    <!-- いいね機能 -->
+    @if (Auth::user()->is_like($menu->id))
+    <form action="{{ route('like.delete', $menu->id) }}" method="POST">
+        @csrf
+        @method('DELETE')
+        <button type="submit" class="button btn btn-warning">いいね！を外す</button>
+    </form>
+    @else
+    <form action="{{ route('like.store', $menu->id) }}" method="POST">
+        @csrf
+        <button type="submit" class="button btn btn-success">いいね！を付ける</button>
+    </form>
+    @endif
+    <div class="text-right mb-2">いいね！
+        <span class="badge badge-pill badge-success">{{ $like }}</span>
+    </div>
+
     @endauth
 
     <div class="image">

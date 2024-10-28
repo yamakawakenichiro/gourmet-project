@@ -5,7 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ReportController;
-
+use App\Http\Controllers\LikeController;
+use App\Models\Like;
 use App\Models\Menu;
 use App\Models\Report;
 
@@ -35,10 +36,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/menus/{menu}', [MenuController::class, 'delete'])->name('delete');
 });
 
-//報告
+//報告機能
 Route::middleware('auth')->group(function () {
     Route::get('/menus/{menu}/report', [ReportController::class, 'create'])->name('report.create');
     Route::post('/reports/{menu}', [ReportController::class, 'store'])->name('report.store');
+});
+
+//いいね機能
+Route::middleware('auth')->group(function () {
+    Route::post('/reports/{menu}/like', [LikeController::class, 'store'])->name('like.store');
+    Route::delete('/reports/{menu}/like', [LikeController::class, 'delete'])->name('like.delete');
 });
 
 //ダッシュボード（デフォルト）

@@ -11,9 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('menus', function (Blueprint $table) {
-            $table->dropForeign('menus_shop_id_foreign');
-        });
+        Schema::dropIfExists('report_user');
     }
 
     /**
@@ -21,8 +19,11 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('menus', function (Blueprint $table) {
-            //
+        Schema::create('report_user', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('user_id')->constrained();
+            $table->foreignId('report_id')->constrained();
+            $table->timestamp('created_at')->useCurrent();
         });
     }
 };
