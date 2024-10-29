@@ -31,7 +31,10 @@
     {{-- 検索機能ここから --}}
     <div>
         <form action="{{ route('index') }}" method="GET">
-            <input type="text" name="keyword" value="{{ $keyword }}">
+            <input type="text" name="keyword[name]" value="{{ $keywords['name'] ?? '' }}" placeholder="店名orメニュー名">
+            <input type="number" name="keyword[count]" value="{{ $keywords['count'] ?? '' }}" placeholder="食べた回数" min="0">
+            <input type="number" name="keyword[price_min]" value="{{ $keywords['price_min'] ?? '' }}" placeholder="最低価格" min="0">
+            <input type="number" name="keyword[price_max]" value="{{ $keywords['price_max'] ?? '' }}" placeholder="最高価格" min="0">
             <input type="submit" value="検索">
         </form>
     </div>
