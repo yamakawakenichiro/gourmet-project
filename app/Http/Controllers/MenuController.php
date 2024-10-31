@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Menu;
 use App\Models\Shop;
+use App\Models\User;
 use App\Models\Category;
 use App\Http\Requests\MenuRequest;
 use App\Http\Requests\SearchRequest;
@@ -36,7 +37,8 @@ class MenuController extends Controller
     public function show(Menu $menu)
     {
         $like = $menu->like_users()->count();
-        return view('menus.show')->with(['menu' => $menu, 'like' => $like]);
+        $user = User::find($menu->user_id);
+        return view('menus.show')->with(['menu' => $menu, 'like' => $like, 'user' => $user]);
     }
     public function create()
     {

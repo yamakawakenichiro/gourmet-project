@@ -11,7 +11,6 @@
 
 <body>
     {{ $menu->user->name }}
-
     @auth
 
     <!-- 自分の投稿の場合は編集・削除ボタンを表示 -->
@@ -23,7 +22,16 @@
         <button type="button" onclick="deleteMenu('{{ $menu->id }}')">削除</button>
     </form>
     @else
-    <!-- 他人の投稿の場合は報告ボタンを表示 -->
+    <!-- 他人の投稿 -->
+    <!-- フォロー/アンフォローボタン -->
+    @php
+    $isFollowing = auth()->check() && auth()->user()->isFollowing($user);
+    @endphp
+    <form action="{{ route($isFollowing ? 'unfollow' : 'follow', $user) }}" method="POST">
+        @csrf
+        <button type="submit">{{ $isFollowing ? 'Unfollow' : 'Follow' }}</button>
+    </form>
+    <!-- 報告ボタン -->
     <div class="report"><a href='/menus/{{ $menu->id }}/report'>報告</a></div>
     @endif
 

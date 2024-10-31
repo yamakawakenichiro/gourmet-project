@@ -87,4 +87,20 @@ class User extends Authenticatable
             return false;
         }
     }
+
+    //ユーザーが特定の他のユーザーをフォローしているかどうか
+    public function isFollowing(User $user)
+    {
+        return $this->followings()->where('following_id', $user->id)->exists();
+    }
+    //自分がフォローしているユーザー
+    public function followings()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
+    }
+    //自分をフォローしているユーザー
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
+    }
 }

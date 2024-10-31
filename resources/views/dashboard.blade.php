@@ -5,6 +5,25 @@
         </h2>
     </x-slot>
 
+    <!-- フォロー/アンフォロー一覧 -->
+    @php
+    $user = Auth::user();
+    @endphp
+
+    <h2>Following</h2>
+    <ul>
+        @foreach ($user->followings as $following)
+        <li>{{ $following->name }}</li>
+        @endforeach
+    </ul>
+
+    <h2>Followers</h2>
+    <ul>
+        @foreach ($user->followers as $follower)
+        <li>{{ $follower->name }}</li>
+        @endforeach
+    </ul>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">

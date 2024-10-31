@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\FollowController;
 use App\Models\Like;
 use App\Models\Menu;
 use App\Models\Report;
@@ -59,5 +60,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// フォローするためのルート
+Route::post('/users/{user}/follow', [FollowController::class, 'follow'])->name('follow');
+// アンフォローするためのルート
+Route::post('/users/{user}/unfollow', [FollowController::class, 'unfollow'])->name('unfollow');
 
 require __DIR__ . '/auth.php';
