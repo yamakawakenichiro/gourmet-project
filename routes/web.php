@@ -7,6 +7,7 @@ use App\Http\Controllers\MenuController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\FollowController;
+use App\Http\Controllers\GoogleLoginController;
 use App\Models\Like;
 use App\Models\Menu;
 use App\Models\Report;
@@ -65,5 +66,9 @@ Route::middleware('auth')->group(function () {
 Route::post('/users/{user}/follow', [FollowController::class, 'follow'])->name('follow');
 // アンフォローするためのルート
 Route::post('/users/{user}/unfollow', [FollowController::class, 'unfollow'])->name('unfollow');
+
+// グーグルログイン
+Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth'])->name('auth.google');
+Route::get('/login/callback', [GoogleLoginController::class, 'authGoogleCallback']);
 
 require __DIR__ . '/auth.php';
