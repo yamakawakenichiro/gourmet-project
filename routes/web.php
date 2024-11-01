@@ -8,11 +8,13 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\LikeController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\GoogleLoginController;
+use App\Http\Controllers\CommentController;
 use App\Models\Like;
 use App\Models\Menu;
 use App\Models\Report;
-
 use Illuminate\Support\Facades\Log;
+
+require __DIR__ . '/auth.php';
 
 /*
 |--------------------------------------------------------------------------
@@ -71,4 +73,5 @@ Route::post('/users/{user}/unfollow', [FollowController::class, 'unfollow'])->na
 Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth'])->name('auth.google');
 Route::get('/login/callback', [GoogleLoginController::class, 'authGoogleCallback']);
 
-require __DIR__ . '/auth.php';
+// コメント
+Route::post('/menus/{menu}/comments', [CommentController::class, 'store'])->name('comments.store');

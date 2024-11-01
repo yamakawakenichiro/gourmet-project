@@ -55,4 +55,8 @@ class Menu extends Model
     {
         return $this->belongsToMany(User::class, 'likes', 'user_id', 'menu_id');
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
