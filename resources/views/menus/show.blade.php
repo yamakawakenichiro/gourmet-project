@@ -75,12 +75,39 @@
         <p>{{ $menu->count }}</p>
     </div>
     <div class="body">
-        <p>コメント欄</p>
+        <p>メモ欄</p>
         <p>{{ $menu->body }}</p>
     </div>
     <div class="footer">
         <a href="{{ route('index') }}">戻る</a>
     </div>
+
+    <!-- コメント-->
+    <h2>Comments</h2>
+
+    @foreach($menu->comments as $comment)
+    <div class="comment">
+        <strong>{{ $comment->user->name }}</strong> ({{ $comment->created_at->diffForHumans() }}):
+        <p>{{ $comment->content }}</p>
+    </div>
+    @endforeach
+
+    @if(auth()->check())
+    <form method="POST" action="{{ route('comments.store', $menu->id) }}">
+        @csrf
+        <textarea name="content" placeholder="コメントを入力してください"></textarea>
+        <button type="submit">コメントを送信</button>
+    </form>
+    @else
+    <p>コメントを残すにはログインしてください。</p>
+    @endif
+
+    <!-- 操作完了メッセージ-->
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
 
     <script>
         function deleteMenu(id) {
