@@ -56,7 +56,11 @@
 
     <div class="image">
         <p>画像をアップロードしますか？</p>
-        <img src="{{ $menu->image }}" alt="Menu画像">
+        @if ($menu->image_path)
+        <img src="{{ $menu->image_path }}" alt="Menu Image" style="max-width: 100%; height: auto;">
+        @else
+        <p>No image</p>
+        @endif
     </div>
     <div class="shop_name">
         <p>お店の名前はなんですか？</p>

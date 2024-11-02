@@ -7,11 +7,17 @@
 </head>
 
 <body>
-    <form action="{{ route('store') }}" method="POST">
+    @if (session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
+
+    <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="image">
             <p>画像をアップロードしますか？</p>
-            <input type="file" name="menu[image]" accept="image/*">
+            <input type="file" name="menu[image_path]" accept="image/*">
         </div>
         <div class="shop_name">
             <p>お店の名前はなんですか？</p>
@@ -32,7 +38,7 @@
             <input type="number" name="menu[count]" value="{{ old('menu.count') }}" />
         </div>
         <div class="body">
-            <p>コメント欄</p>
+            <p>メモ欄</p>
             <textarea name="menu[body]"> {{ old('menu.body') }}</textarea>
         </div>
         <input type="submit" value="保存" />

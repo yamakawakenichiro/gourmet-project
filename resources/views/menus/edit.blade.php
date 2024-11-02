@@ -11,12 +11,20 @@
 
 <body>
     <div class="content">
-        <form action="{{ route('show', ['menu' => $menu->id]) }}" method="POST">
+        <form action="{{ route('show', ['menu' => $menu->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="image">
+                <!-- 画像入力 -->
                 <p>画像をアップロードしますか？</p>
-                <input type="file" name="menu[image]" accept="image/*" value="{{ $menu->image }}">
+                <input type="file" name="menu[image_path]" accept="image/*">
+                <!-- 画像表示 -->
+                @if ($menu->image_path)
+                <img src="{{ $menu->image_path }}" alt="Menu Image" style="max-width: 100%; height: auto;">
+                <p>画像を削除しますか？ <input type="checkbox" name="delete_image" value="true"></p>
+                @else
+                <p>No image</p>
+                @endif
             </div>
             <div class="shop_name">
                 <p>お店の名前はなんですか？</p>
