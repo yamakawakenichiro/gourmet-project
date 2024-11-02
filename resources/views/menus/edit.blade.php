@@ -21,8 +21,9 @@
                 <!-- 画像表示 -->
                 @if ($menu->image_path)
                 <img src="{{ $menu->image_path }}" alt="Menu Image" style="max-width: 100%; height: auto;">
+                <p>画像を削除しますか？ <input type="checkbox" name="delete_image" value="true"></p>
                 @else
-                <p>No image available</p>
+                <p>No image</p>
                 @endif
             </div>
             <div class="shop_name">

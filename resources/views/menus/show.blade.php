@@ -59,7 +59,7 @@
         @if ($menu->image_path)
         <img src="{{ $menu->image_path }}" alt="Menu Image" style="max-width: 100%; height: auto;">
         @else
-        <p>No image available</p>
+        <p>No image</p>
         @endif
     </div>
     <div class="shop_name">

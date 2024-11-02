@@ -69,16 +69,22 @@ class MenuController extends Controller
     }
     public function update(MenuRequest $request, Menu $menu)
     {
-        $imagePath = $menu->image_path;
-        if ($request->hasFile('menu.image_path')) {
+        $input = $request['menu'];
+
+        if ($request->has('delete_image') && $request->delete_image == 'true') {
+            // Cloudinaryから画像を削除するコードをここに追加（削除方法はCloudinaryのドキュメントを参照）
+            $publicId = basename($menu->image_path, '.' . pathinfo($menu->image_path, PATHINFO_EXTENSION));
+            Cloudinary::destroy($publicId);
+            $menu->image_path = null;
+        } elseif ($request->hasFile('menu.image_path')) {
             // Cloudinaryに画像をアップロードし、パスを取得
             $uploadedFileUrl = Cloudinary::upload($request->file('menu.image_path')->getRealPath())->getSecurePath();
-            $imagePath = $uploadedFileUrl;
+            $menu->image_path = $uploadedFileUrl;
         }
-        $input = $request['menu'];
+
         $menu->user_id = $request->user()->id;
-        $menu->image_path = $imagePath;
         $menu->fill($input)->save();
+
         return redirect()->route('show', ['menu' => $menu->id]);
     }
     public function delete(Menu $menu)
