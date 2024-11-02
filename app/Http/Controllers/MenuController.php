@@ -72,7 +72,7 @@ class MenuController extends Controller
         $input = $request['menu'];
 
         if ($request->has('delete_image') && $request->delete_image == 'true') {
-            // Cloudinaryから画像を削除するコードをここに追加（削除方法はCloudinaryのドキュメントを参照）
+            // Cloudinaryから画像を削除
             $publicId = basename($menu->image_path, '.' . pathinfo($menu->image_path, PATHINFO_EXTENSION));
             Cloudinary::destroy($publicId);
             $menu->image_path = null;
@@ -89,6 +89,9 @@ class MenuController extends Controller
     }
     public function delete(Menu $menu)
     {
+        // Cloudinaryから画像を削除
+        $publicId = basename($menu->image_path, '.' . pathinfo($menu->image_path, PATHINFO_EXTENSION));
+        Cloudinary::destroy($publicId);
         $menu->delete();
         return redirect()->route('index');
     }
