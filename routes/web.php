@@ -31,47 +31,40 @@ require __DIR__ . '/auth.php';
 Route::get('/', [MenuController::class, 'index'])->name('index');
 Route::get('/menus/{menu}', [MenuController::class, 'show'])->name('show');
 
-//投稿CRUD（認証）
-Route::middleware('auth')->group(function () {
-    Route::get('/menus/create', [MenuController::class, 'create'])->name('create');
-    Route::post('/menus', [MenuController::class, 'store'])->name('store');
-    Route::get('/menus/{menu}/edit', [MenuController::class, 'edit'])->name('edit');
-    Route::put('/menus/{menu}', [MenuController::class, 'update'])->name('update');
-    Route::delete('/menus/{menu}', [MenuController::class, 'delete'])->name('delete');
-});
-
-//報告機能
-Route::middleware('auth')->group(function () {
-    Route::get('/menus/{menu}/report', [ReportController::class, 'create'])->name('report.create');
-    Route::post('/reports/{menu}', [ReportController::class, 'store'])->name('report.store');
-});
-
-//いいね機能
-Route::middleware('auth')->group(function () {
-    Route::post('/reports/{menu}/like', [LikeController::class, 'store'])->name('like.store');
-    Route::delete('/reports/{menu}/like', [LikeController::class, 'delete'])->name('like.delete');
-});
-
 //ダッシュボード（デフォルト）
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-//プロファイル（デフォルト）
 Route::middleware('auth')->group(function () {
+    //投稿CRUD 
+    Route::get('/menus/create', [MenuController::class, 'create'])->name('create');
+    Route::post('/menus', [MenuController::class, 'store'])->name('store');
+    Route::get('/menus/{menu}/edit', [MenuController::class, 'edit'])->name('edit');
+    Route::put('/menus/{menu}', [MenuController::class, 'update'])->name('update');
+    Route::delete('/menus/{menu}', [MenuController::class, 'delete'])->name('delete');
+
+    //報告機能
+    Route::get('/menus/{menu}/report', [ReportController::class, 'create'])->name('report.create');
+    Route::post('/reports/{menu}', [ReportController::class, 'store'])->name('report.store');
+
+    //いいね機能
+    Route::post('/reports/{menu}/like', [LikeController::class, 'store'])->name('like.store');
+    Route::delete('/reports/{menu}/like', [LikeController::class, 'delete'])->name('like.delete');
+
+    //プロファイル（デフォルト）
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // フォロー・アンフォロー
+    Route::post('/users/{user}/follow', [FollowController::class, 'follow'])->name('follow');
+    Route::post('/users/{user}/unfollow', [FollowController::class, 'unfollow'])->name('unfollow');
+
+    // グーグルログイン
+    Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth'])->name('auth.google');
+    Route::get('/login/callback', [GoogleLoginController::class, 'authGoogleCallback']);
+
+    // コメント
+    Route::post('/menus/{menu}/comments', [CommentController::class, 'store'])->name('comments.store');
 });
-
-// フォローするためのルート
-Route::post('/users/{user}/follow', [FollowController::class, 'follow'])->name('follow');
-// アンフォローするためのルート
-Route::post('/users/{user}/unfollow', [FollowController::class, 'unfollow'])->name('unfollow');
-
-// グーグルログイン
-Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth'])->name('auth.google');
-Route::get('/login/callback', [GoogleLoginController::class, 'authGoogleCallback']);
-
-// コメント
-Route::post('/menus/{menu}/comments', [CommentController::class, 'store'])->name('comments.store');

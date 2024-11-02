@@ -12,6 +12,7 @@ use App\Http\Requests\SearchRequest;
 use App\Models\Report;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 
 class MenuController extends Controller
 {
@@ -44,19 +45,18 @@ class MenuController extends Controller
     {
         return view('menus.create');
     }
-    public function store(MenuRequest $request, Menu $menu, Shop $shop)
+    public function store(MenuRequest $request, Menu $menu)
     {
-        //shopsに同一のshop_nameが存在しない場合、shopsにshop_nameを保存
-        $shop_name = $request->input('menu.shop_name');
-        $existing_shop = Shop::where('name', $shop_name)->first();
-        if (!$existing_shop) {
-            $shop->user_id = $request->userId();
-            $shop->name = $shop_name;
-            $shop->save();
+        // 画像の保存
+        $imagePath = $menu->image_path;
+        if ($request->hasFile('menu.image_path')) {
+            // Cloudinaryに画像をアップロードし、パスを取得
+            $uploadedFileUrl = Cloudinary::upload($request->file('menu.image_path')->getRealPath())->getSecurePath();
+            $imagePath = $uploadedFileUrl;
         }
-
         $input = $request['menu'];
-        $menu->user_id = $request->userId();
+        $menu->user_id = $request->user()->id;
+        $menu->image_path = $imagePath;
         $menu->fill($input)->save();
         return redirect()->route('index');
     }
@@ -67,19 +67,17 @@ class MenuController extends Controller
         }
         return view('menus.edit')->with(['menu' => $menu]);
     }
-    public function update(MenuRequest $request, Menu $menu, Shop $shop)
+    public function update(MenuRequest $request, Menu $menu)
     {
-        //shopsに同一のshop_nameが存在しない場合、shopsにshop_nameを保存
-        $shop_name = $request->input('menu.shop_name');
-        $existing_shop = Shop::where('name', $shop_name)->first();
-        if (!$existing_shop) {
-            $shop->user_id = $request->userId();
-            $shop->name = $shop_name;
-            $shop->save();
+        $imagePath = $menu->image_path;
+        if ($request->hasFile('menu.image_path')) {
+            // Cloudinaryに画像をアップロードし、パスを取得
+            $uploadedFileUrl = Cloudinary::upload($request->file('menu.image_path')->getRealPath())->getSecurePath();
+            $imagePath = $uploadedFileUrl;
         }
-
         $input = $request['menu'];
-        $menu->user_id = $request->userId();
+        $menu->user_id = $request->user()->id;
+        $menu->image_path = $imagePath;
         $menu->fill($input)->save();
         return redirect()->route('show', ['menu' => $menu->id]);
     }

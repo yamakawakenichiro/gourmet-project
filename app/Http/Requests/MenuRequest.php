@@ -22,14 +22,9 @@ class MenuRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'menu.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'menu.shop_name' => 'required|string|max:50',
             'menu.name' => 'required|string|max:50',
         ];
-    }
-
-    //$request->userId()でリクエストしている人のuser_idを取得をできるようにする
-    public function userId(): int
-    {
-        return $this->user()->id;
     }
 }
