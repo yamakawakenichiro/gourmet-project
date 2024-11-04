@@ -37,4 +37,8 @@ return [
         'redirect' => env('GOOGLE_CALLBACK_URL'),
     ],
 
+    'google-map' => [
+        'apikey' => env('GOOGLE_MAP_API'),
+    ],
+
 ];

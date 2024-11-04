@@ -90,8 +90,10 @@ class MenuController extends Controller
     public function delete(Menu $menu)
     {
         // Cloudinaryから画像を削除
-        $publicId = basename($menu->image_path, '.' . pathinfo($menu->image_path, PATHINFO_EXTENSION));
-        Cloudinary::destroy($publicId);
+        if ($menu->image_path) {
+            $publicId = basename($menu->image_path, '.' . pathinfo($menu->image_path, PATHINFO_EXTENSION));
+            Cloudinary::destroy($publicId);
+        }
         $menu->delete();
         return redirect()->route('index');
     }
