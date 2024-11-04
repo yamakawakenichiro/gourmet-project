@@ -25,6 +25,8 @@ class MenuRequest extends FormRequest
             'menu.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'menu.shop_name' => 'required|string|max:50',
             'menu.name' => 'required|string|max:50',
+            'menu.latitude' => 'nullable|numeric',
+            'menu.longitude' => 'nullable|numeric',
         ];
     }
 }

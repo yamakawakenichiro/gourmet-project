@@ -19,6 +19,8 @@ class Menu extends Model
         'price',
         'count',
         'body',
+        'latitude',
+        'longitude',
     ];
 
     public function getPaginateByLimit(int $limit_count = 10, $keywords)
