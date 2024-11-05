@@ -9,6 +9,7 @@ use App\Http\Controllers\LikeController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\GeminiController;
 use App\Models\Like;
 use App\Models\Menu;
 use App\Models\Report;
@@ -67,4 +68,7 @@ Route::middleware('auth')->group(function () {
 
     // コメント
     Route::post('/menus/{menu}/comments', [CommentController::class, 'store'])->name('comments.store');
+
+    // Gemini
+    Route::post('/gemini', [GeminiController::class, 'post'])->name('gemini.post');
 });

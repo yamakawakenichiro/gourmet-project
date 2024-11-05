@@ -24,13 +24,34 @@
         @endforeach
     </ul>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div>
+
+    <!-- ユーザー入力部分 -->
+    <textarea id="userInput" placeholder="ここに文を入力してください"></textarea>
+    <button type="button" id="aiGenerateButton">AIによる応答</button>
+
+    <div id="aiDescription">
+        <!-- AIの説明がここに挿入されます -->
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- axios -->
+    <script>
+        // ユーザーがした入力の処理
+        document.getElementById('aiGenerateButton').addEventListener('click', function() {
+            const sentence = document.getElementById('userInput').value.trim(); // トリムして空白のみの入力を防ぐ
+            // 空欄アラート
+            if (!sentence) {
+                alert("入力欄に文章を入力してください。"); // 入力が空の場合は警告を表示
+                return; // 処理を中断
+            }
+            // ルート
+            axios.post('/gemini', {
+                sentence: sentence,
+                _token: '{{ csrf_token() }}'
+            }).then(response => {
+                document.getElementById('aiDescription').innerText = response.data.aiGeneratedDescription;
+            }).catch(error => {
+                console.error('AIによる説明の取得に失敗しました。', error);
+            });
+        });
+    </script>
 </x-app-layout>
