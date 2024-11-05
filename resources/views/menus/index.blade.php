@@ -21,6 +21,7 @@
                     function(position) {
                         // 緯度・経度を変数に格納
                         var mapLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+                        // var mapLatLng = new google.maps.LatLng(37.57, 126.97);//テスト（韓国のソウル）
                         // マップオプションを変数に格納
                         var mapOptions = {
                             zoom: 15, // 拡大倍率
