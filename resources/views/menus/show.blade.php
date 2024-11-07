@@ -49,7 +49,7 @@
     </form>
     @endif
     <div class="text-right mb-2">いいね！
-        <span class="badge badge-pill badge-success">{{ $like }}</span>
+        <span class="badge badge-pill badge-success">{{ $menu->like_users_count }}</span>
     </div>
 
     @endauth

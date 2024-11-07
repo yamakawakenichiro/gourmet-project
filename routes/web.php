@@ -32,6 +32,10 @@ require __DIR__ . '/auth.php';
 Route::get('/', [MenuController::class, 'index'])->name('index');
 Route::get('/menus/{menu}', [MenuController::class, 'show'])->name('show');
 
+// グーグルログイン
+Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth'])->name('auth.google');
+Route::get('/login/callback', [GoogleLoginController::class, 'authGoogleCallback']);
+
 //ダッシュボード（デフォルト）
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -61,10 +65,6 @@ Route::middleware('auth')->group(function () {
     // フォロー・アンフォロー
     Route::post('/users/{user}/follow', [FollowController::class, 'follow'])->name('follow');
     Route::post('/users/{user}/unfollow', [FollowController::class, 'unfollow'])->name('unfollow');
-
-    // グーグルログイン
-    Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth'])->name('auth.google');
-    Route::get('/login/callback', [GoogleLoginController::class, 'authGoogleCallback']);
 
     // コメント
     Route::post('/menus/{menu}/comments', [CommentController::class, 'store'])->name('comments.store');

@@ -37,9 +37,14 @@ class MenuController extends Controller
     }
     public function show(Menu $menu)
     {
-        $like = $menu->like_users()->count();
-        $user = User::find($menu->user_id);
-        return view('menus.show')->with(['menu' => $menu, 'like' => $like, 'user' => $user]);
+        $menu->loadCount('like_users');
+        $user = $menu->user; // 既にリレーションによる利用が適切
+
+        return view('menus.show')->with([
+            'menu' => $menu,
+            'like' => $menu->like_users_count,
+            'user' => $user
+        ]);
     }
     public function create()
     {

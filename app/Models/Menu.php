@@ -55,7 +55,7 @@ class Menu extends Model
     }
     public function like_users()
     {
-        return $this->belongsToMany(User::class, 'likes', 'user_id', 'menu_id');
+        return $this->belongsToMany(User::class, 'likes', 'menu_id', 'user_id');
     }
     public function comments()
     {
