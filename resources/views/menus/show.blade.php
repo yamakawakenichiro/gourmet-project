@@ -1,19 +1,8 @@
-<!DOCTYPE HTML>
-<html lang="ja">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>グルメモ</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-</head>
-
-<body>
+<x-app-layout>
     {{ $menu->user->name }}
     @auth
 
-    <!-- 自分の投稿の場合は編集・削除ボタンを表示 -->
+    {{-- 自分の投稿の場合は編集・削除ボタンを表示 --}}
     @if ($menu->user_id === auth()->id())
     <div class="edit"><a href='/menus/{{ $menu->id }}/edit'>編集</a></div>
     <form action="/menus/{{ $menu->id }}" id="form_{{ $menu->id }}" method="post">
@@ -22,8 +11,8 @@
         <button type="button" onclick="deleteMenu('{{ $menu->id }}')">削除</button>
     </form>
     @else
-    <!-- 他人の投稿 -->
-    <!-- フォロー/アンフォローボタン -->
+    {{-- 他人の投稿 --}}
+    {{-- フォロー/アンフォローボタン --}}
     @php
     $isFollowing = auth()->check() && auth()->user()->isFollowing($user);
     @endphp
@@ -31,11 +20,11 @@
         @csrf
         <button type="submit">{{ $isFollowing ? 'Unfollow' : 'Follow' }}</button>
     </form>
-    <!-- 報告ボタン -->
+    {{-- 報告ボタン --}}
     <div class="report"><a href='/menus/{{ $menu->id }}/report'>報告</a></div>
     @endif
 
-    <!-- いいね機能 -->
+    {{-- いいね機能 --}}
     @if (Auth::user()->is_like($menu->id))
     <form action="{{ route('like.delete', $menu->id) }}" method="POST">
         @csrf
@@ -86,7 +75,7 @@
         <a href="{{ route('index') }}">戻る</a>
     </div>
 
-    <!-- コメント-->
+    {{-- コメント--}}
     <h2>Comments</h2>
 
     @foreach($menu->comments as $comment)
@@ -106,7 +95,7 @@
     <p>コメントを残すにはログインしてください。</p>
     @endif
 
-    <!-- 操作完了メッセージ-->
+    {{-- 操作完了メッセージ--}}
     @if(session('success'))
     <div class="alert alert-success">
         {{ session('success') }}
@@ -122,6 +111,4 @@
             }
         }
     </script>
-</body>
-
-</html>
+</x-app-layout>

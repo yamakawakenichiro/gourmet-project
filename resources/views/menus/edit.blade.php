@@ -1,15 +1,4 @@
-<!DOCTYPE HTML>
-<html lang="ja">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>グルメモ</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-</head>
-
-<body>
+<x-app-layout>
     <div class="content">
         <form action="{{ route('show', ['menu' => $menu->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -54,6 +43,4 @@
             <a href="{{route('show', ['menu' => $menu->id])}}">戻る</a>
         </div>
     </div>
-</body>
-
-</html>
+</x-app-layout>

@@ -1,12 +1,9 @@
-<!DOCTYPE HTML>
-<html lang="ja">
-
-<head>
-    <meta charset="utf-8">
-    <title>グルメモ</title>
-</head>
-
-<body>
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('メモの新規作成') }}
+        </h2>
+    </x-slot>
     @if (session('error'))
     <div class="alert alert-danger">
         {{ session('error') }}
@@ -46,6 +43,4 @@
     <div class="footer">
         <a href="{{ route('index') }}">戻る</a>
     </div>
-</body>
-
-</html>
+</x-app-layout>

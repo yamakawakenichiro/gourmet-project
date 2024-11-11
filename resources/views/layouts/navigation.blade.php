@@ -10,17 +10,29 @@
                     </a>
                 </div>
 
+                @auth
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
-                        {{ __('全投稿') }}
+                        {{ __('HOME') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('create')" :active="request()->routeIs('create')">{{--request()->routeIs('create') は、現在のルート名が create であるかを判定します。現在のページが create ルートの場合に true を返し、リンクが「アクティブ」状態になります。--}}
+                        {{ __('新規作成') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('create')" :active="request()->routeIs('create')">
+                        {{ __('自分のメモ') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('create')" :active="request()->routeIs('create')">
+                        {{ __('いいねしたメモ') }}
                     </x-nav-link>
                 </div>
+                @endauth
             </div>
 
+            @auth
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
@@ -38,6 +50,9 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
+                            {{ __('フォロー・フォロワー') }}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
 
@@ -54,7 +69,9 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+            @endauth
 
+            @auth
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
                 <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
@@ -64,14 +81,28 @@
                     </svg>
                 </button>
             </div>
+            @endauth
         </div>
     </div>
 
+    @auth
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('index')" :active="request()->routeIs('index')">
+                {{ __('HOME') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('create')" :active="request()->routeIs('create')">
+                {{ __('新規作成') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('create')" :active="request()->routeIs('create')">
+                {{ __('自分のメモ') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('create')" :active="request()->routeIs('create')">
+                {{ __('いいねしたメモ') }}
             </x-responsive-nav-link>
         </div>
 
@@ -83,6 +114,9 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('profile.edit')">
+                    {{ __('フォロー・フォロワー') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
@@ -100,4 +134,5 @@
             </div>
         </div>
     </div>
+    @endauth
 </nav>

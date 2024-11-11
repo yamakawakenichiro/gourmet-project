@@ -1,1 +1,1 @@
-<img src="{{ asset('storage/images/mac.png') }}" width="70" height="70">
+<img src="{{ asset('storage/images/hamburger_1.png') }}" width="60" height="60">
