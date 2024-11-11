@@ -1,4 +1,9 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('メモの違反報告') }}
+        </h2>
+    </x-slot>
     <div class="content">
         <form action="{{ route('report.store', ['menu' => $menu->id]) }}" method="POST">
             @csrf
@@ -9,9 +14,6 @@
             </select>
             <input type="submit" onclick="reportComplete()" value="送信" />
         </form>
-    </div>
-    <div class="footer">
-        <a href="{{route('show', ['menu' => $menu->id])}}">戻る</a>
     </div>
 
     <script>

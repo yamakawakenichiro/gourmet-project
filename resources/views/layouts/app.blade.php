@@ -13,9 +13,15 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+    {{--FontsはCDN。viteのapp.cssにまとめない方がいいらしい。読み込みに時間がかかり時崩れの可能性があるため。--}}
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/map.js'])
+    @vite([
+    'resources/css/app.css',
+    'resources/css/pagination.css',
+    'resources/js/app.js',
+    'resources/js/map.js'
+    ])
     <script>
         // 現在地取得処理(viteでmap.jsを入れているが、リロードするとmapが消えてしまうため、以下にも記載)
         function initMap() {

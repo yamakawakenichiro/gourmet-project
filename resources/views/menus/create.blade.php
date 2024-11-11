@@ -40,7 +40,4 @@
         </div>
         <input type="submit" value="保存" />
     </form>
-    <div class="footer">
-        <a href="{{ route('index') }}">戻る</a>
-    </div>
 </x-app-layout>

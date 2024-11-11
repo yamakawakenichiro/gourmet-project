@@ -1,4 +1,9 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('メモの編集') }}
+        </h2>
+    </x-slot>
     <div class="content">
         <form action="{{ route('show', ['menu' => $menu->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
@@ -39,8 +44,5 @@
             </div>
             <input type="submit" value="更新" />
         </form>
-        <div class="footer">
-            <a href="{{route('show', ['menu' => $menu->id])}}">戻る</a>
-        </div>
     </div>
 </x-app-layout>

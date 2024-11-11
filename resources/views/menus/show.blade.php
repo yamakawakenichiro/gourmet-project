@@ -1,4 +1,9 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ __('メモの詳細') }}
+        </h2>
+    </x-slot>
     {{ $menu->user->name }}
     @auth
 
@@ -37,7 +42,7 @@
         <button type="submit" class="button btn btn-success">いいね！を付ける</button>
     </form>
     @endif
-    <div class="text-right mb-2">いいね！
+    <div class="text-left mb-2">いいね！
         <span class="badge badge-pill badge-success">{{ $menu->like_users_count }}</span>
     </div>
 
