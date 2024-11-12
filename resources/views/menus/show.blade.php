@@ -109,7 +109,9 @@
                 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 float-right mr-4 mb-12">コメントする</button>
             </form>
             @else
-            <p>コメントを残すにはログインしてください。</p>
+            <div class="bg-white w-full rounded-2xl px-10 py-4 shadow-lg hover:shadow-2xl transition duration-500 mt-4">
+                <p>コメントを残すにはログインしてください。</p>
+            </div>
             @endif
 
         </div>

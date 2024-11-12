@@ -29,6 +29,6 @@ class GoogleLoginController extends Controller
             // 'remember_token'は自動で処理される
         ]);
         Auth::login($user, true);
-        return redirect()->route('dashboard');
+        return redirect()->route('index');
     }
 }

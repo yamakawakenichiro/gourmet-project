@@ -5,6 +5,8 @@
         </h2>
     </x-slot>
 
+    <div id="map" style="width:400px; height:300px"></div>
+
     <!-- フォロー/アンフォロー一覧 -->
     @php
     $user = Auth::user();
@@ -34,6 +36,7 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- axios -->
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google-map.apikey') }}&callback=initMap"></script>
     <script>
         // ユーザーがした入力の処理
         document.getElementById('aiGenerateButton').addEventListener('click', function() {
