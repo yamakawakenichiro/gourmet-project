@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $user->name }}{{ __('メモの一覧') }}
+            {{ $user->name }}さんの{{ __('メモの一覧') }}
         </h2>
     </x-slot>
 

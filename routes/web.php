@@ -63,6 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // フォロー・アンフォロー
+    Route::get('/users/{user}/follow', [FollowController::class, 'index'])->name('follow.index');
     Route::post('/users/{user}/follow', [FollowController::class, 'follow'])->name('follow');
     Route::post('/users/{user}/unfollow', [FollowController::class, 'unfollow'])->name('unfollow');
 
