@@ -35,6 +35,34 @@ class MenuController extends Controller
             'keywords' => $keywords
         ]);
     }
+    public function userIndex(SearchRequest $request, $userId, Menu $menu)
+    {
+        $keywords = $request->input('keyword', []);
+
+        // ＜条件式 ? 式1 : 式2＞  intval()は数値型でないデータを整数に変換 max(0, ...)は0とその整数値のうち大きい方を選ぶための関数
+        $keywords['count'] = isset($keywords['count']) ? max(0, intval($keywords['count'])) : null;
+        $keywords['price_min'] = isset($keywords['price_min']) ? max(0, intval($keywords['price_min'])) : null;
+        $keywords['price_max'] = isset($keywords['price_max']) ? max(0, intval($keywords['price_max'])) : null;
+
+        //array_filter関数の結果を再び$keywordsに代入することで、フィルタリング
+        $keywords = array_filter($keywords, function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+
+        // ユーザー情報の取得
+        $user = User::findOrFail($userId);
+
+        // 該当ユーザーのメニューを取得
+        $menus = Menu::where('user_id', $userId)
+            ->getPaginateByLimit(10, $keywords);
+
+        return view('menus.user_index')->with([
+            'menus' => $menus,
+            'user' => $user,
+            'keywords' => $keywords
+        ]);
+    }
+
     public function show(Menu $menu)
     {
         $menu->loadCount('like_users');

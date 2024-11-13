@@ -71,4 +71,7 @@ Route::middleware('auth')->group(function () {
 
     // Gemini
     Route::post('/gemini', [GeminiController::class, 'post'])->name('gemini.post');
+
+    // ユーザー毎の
+    Route::get('/user/{userId}/menus', [MenuController::class, 'userIndex'])->name('user.index');
 });

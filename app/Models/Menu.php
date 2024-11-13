@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 
 class Menu extends Model
@@ -23,9 +24,9 @@ class Menu extends Model
         'longitude',
     ];
 
-    public function getPaginateByLimit(int $limit_count = 10, $keywords)
+    public function scopeGetPaginateByLimit(Builder $query, int $limitCount = 10, $keywords = [])
     {
-        $query = $this->orderBy('updated_at', 'DESC');
+        $query->orderBy('updated_at', 'DESC');
 
         if (!empty($keywords['name'])) {
             $query->where(function ($q) use ($keywords) {
@@ -46,7 +47,7 @@ class Menu extends Model
             $query->where('price', '<=', $keywords['price_max']);
         }
 
-        return $query->paginate($limit_count);
+        return $query->paginate($limitCount);
     }
 
     public function user()
