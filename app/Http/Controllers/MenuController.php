@@ -31,7 +31,7 @@ class MenuController extends Controller
         });
 
         return view('menus.index')->with([
-            'menus' => $menu->getPaginateByLimit(10, $keywords),
+            'menus' => $menu->getPaginateByLimit(30, $keywords),
             'keywords' => $keywords
         ]);
     }
@@ -54,7 +54,7 @@ class MenuController extends Controller
 
         // 該当ユーザーのメニューを取得
         $menus = Menu::where('user_id', $userId)
-            ->getPaginateByLimit(10, $keywords);
+            ->getPaginateByLimit(30, $keywords);
 
         return view('menus.user_index')->with([
             'menus' => $menus,

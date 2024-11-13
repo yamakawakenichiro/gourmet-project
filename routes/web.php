@@ -54,8 +54,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/reports/{menu}', [ReportController::class, 'store'])->name('report.store');
 
     //いいね機能
-    Route::post('/reports/{menu}/like', [LikeController::class, 'store'])->name('like.store');
-    Route::delete('/reports/{menu}/like', [LikeController::class, 'delete'])->name('like.delete');
+    Route::get('/menus/{user}/like', [LikeController::class, 'index'])->name('like.index');
+    Route::post('/menus/{menu}/like', [LikeController::class, 'store'])->name('like.store');
+    Route::delete('/menus/{menu}/like', [LikeController::class, 'delete'])->name('like.delete');
 
     //プロファイル（デフォルト）
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -74,5 +75,5 @@ Route::middleware('auth')->group(function () {
     Route::post('/gemini', [GeminiController::class, 'post'])->name('gemini.post');
 
     // ユーザー毎の
-    Route::get('/user/{userId}/menus', [MenuController::class, 'userIndex'])->name('user.index');
+    Route::get('/user/{user}/menus', [MenuController::class, 'userIndex'])->name('user.index');
 });

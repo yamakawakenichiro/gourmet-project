@@ -7,26 +7,6 @@
 
     <div id="map" style="width:400px; height:300px"></div>
 
-    <!-- フォロー/アンフォロー一覧 -->
-    @php
-    $user = Auth::user();
-    @endphp
-
-    <h2>Following</h2>
-    <ul>
-        @foreach ($user->followings as $following)
-        <li>{{ $following->name }}</li>
-        @endforeach
-    </ul>
-
-    <h2>Followers</h2>
-    <ul>
-        @foreach ($user->followers as $follower)
-        <li>{{ $follower->name }}</li>
-        @endforeach
-    </ul>
-
-
     <!-- ユーザー入力部分 -->
     <textarea id="userInput" placeholder="ここに文を入力してください"></textarea>
     <button type="button" id="aiGenerateButton">AIによる応答</button>

@@ -24,7 +24,7 @@ class Menu extends Model
         'longitude',
     ];
 
-    public function scopeGetPaginateByLimit(Builder $query, int $limitCount = 10, $keywords = [])
+    public function scopeGetPaginateByLimit(Builder $query, int $limitCount = 30, $keywords = [])
     {
         $query->orderBy('updated_at', 'DESC');
 

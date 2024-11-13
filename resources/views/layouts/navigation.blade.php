@@ -22,10 +22,10 @@
                     <x-nav-link :href="route('create')" :active="request()->routeIs('create')">{{--request()->routeIs('create') は、現在のルート名が create であるかを判定します。現在のページが create ルートの場合に true を返し、リンクが「アクティブ」状態になります。--}}
                         {{ __('新規作成') }}
                     </x-nav-link>
-                    <x-nav-link :href="url('/user/' . Auth::id() . '/menus')" :active="request()->is('user/' . Auth::id() . '/menus')">
+                    <x-nav-link :href="route('user.index', ['user' => Auth::id()])" :active="request()->routeIs('user.index', ['user' => Auth::id()])">
                         {{ __('自分のメモ') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('create')" :active="request()->routeIs('create')">
+                    <x-nav-link :href="route('like.index', ['user' => Auth::id()])" :active="request()->routeIs('like.index', ['user' => Auth::id()])">
                         {{ __('いいねしたメモ') }}
                     </x-nav-link>
                 </div>
@@ -108,10 +108,10 @@
             <x-responsive-nav-link :href="route('create')" :active="request()->routeIs('create')">
                 {{ __('新規作成') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="url('/user/' . Auth::id() . '/menus')" :active="request()->is('user/' . Auth::id() . '/menus')">
+            <x-responsive-nav-link :href="route('user.index', ['user' => Auth::id()])" :active="request()->routeIs('user.index', ['user' => Auth::id()])">
                 {{ __('自分のメモ') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('create')" :active="request()->routeIs('create')">
+            <x-responsive-nav-link :href="route('like.index', ['user' => Auth::id()])" :active="request()->routeIs('like.index', ['user' => Auth::id()])">
                 {{ __('いいねしたメモ') }}
             </x-responsive-nav-link>
         </div>

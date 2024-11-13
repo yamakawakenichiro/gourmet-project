@@ -22,4 +22,13 @@ class LikeController extends Controller
         Auth::user()->unlike($menu);
         return back();
     }
+
+    public function index(User $user)
+    {
+        // ユーザーが「いいね」したメニューを取得
+        $menus = $user->likes()->orderBy('updated_at', 'DESC')->paginate(30);
+
+        // ビューにデータを渡す
+        return view('likes.index', compact('menus', 'user'));
+    }
 }
