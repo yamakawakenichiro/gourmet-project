@@ -28,10 +28,12 @@
             <div class="w-full flex flex-col">
                 <label for="price" class="font-semibold leading-none mt-4">価格</label>
                 <input type="number" id="price" name="menu[price]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" value="{{ old('menu.price') }}">
+                <p class="name__error" style="color:red">{{ $errors->first('menu.price') }}</p>
             </div>
             <div class="w-full flex flex-col">
                 <label for="count" class="font-semibold leading-none mt-4">回数</label>
                 <input type="number" id="count" name="menu[count]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" value="{{ old('menu.count') }}">
+                <p class="name__error" style="color:red">{{ $errors->first('menu.count') }}</p>
             </div>
             <div class="w-full flex flex-col">
                 <label for="body" class="font-semibold leading-none mt-4">メモ</label>

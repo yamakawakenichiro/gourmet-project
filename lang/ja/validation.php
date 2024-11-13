@@ -261,6 +261,8 @@ return [
 
         'menu.shop_name' => 'お店の名前',
         'menu.name' => 'メニューの名前',
+        'menu.price' => '価格',
+        'menu.count' => '回数',
     ],
 
 ];
