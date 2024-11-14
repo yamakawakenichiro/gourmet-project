@@ -11,4 +11,8 @@ class Like extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function menu()
+    {
+        return $this->belongsTo(Menu::class);
+    }
 }

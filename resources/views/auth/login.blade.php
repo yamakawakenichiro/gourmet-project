@@ -24,7 +24,7 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Remember Me -->
+        <!-- Remember Me --> {{--LoginRequestクラス rememberオプションをAuth::attemptメソッドに渡すことで、ユーザーが「Remember Me」チェックボックスを選択した場合、長期間のセッションを維持できるようになります。--}}
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
