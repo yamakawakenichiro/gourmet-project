@@ -8,12 +8,12 @@
     <div class="mx-4 sm:p-8">
         <div class="mt-4">
             <div class="bg-white w-full rounded-2xl px-10 pt-2 pb-8 shadow-lg hover:shadow-2xl transition duration-500">
-                <div class="mt-4">
+                <div class="mt-2">
                     <div class="flex flex-col">
-                        <div class="text-lg text-gray-700 font-semibold float-left pt-4">
+                        <div class="text-lg text-gray-700 font-semibold float-left">
                             {{ $menu->shop_name }}
                         </div>
-                        <div class="text-lg text-gray-700 font-semibold float-left pt-2">
+                        <div class="text-lg text-gray-700 font-semibold float-left">
                             {{ $menu->name }}({{ $menu->price }}円 {{ $menu->count }}回目)
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                 @auth
                 {{-- 自分の投稿の場合は編集・削除ボタンを表示 --}}
                 @if ($menu->user_id === auth()->id())
-                <div class="flex justify-end mt-4">
+                <div class="flex justify-end mt-2">
                     <a href='/menus/{{ $menu->id }}/edit'>
                         <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 bg-teal-700 float-right">
                             編集
