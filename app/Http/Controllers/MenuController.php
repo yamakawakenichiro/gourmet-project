@@ -20,19 +20,17 @@ class MenuController extends Controller
     {
         $keywords = $request->input('keyword', []);
 
-        // ＜条件式 ? 式1 : 式2＞  intval()は数値型でないデータを整数に変換 max(0, ...)は0とその整数値のうち大きい方を選ぶための関数
-        $keywords['count'] = isset($keywords['count']) ? max(0, intval($keywords['count'])) : null;
-        $keywords['price_min'] = isset($keywords['price_min']) ? max(0, intval($keywords['price_min'])) : null;
-        $keywords['price_max'] = isset($keywords['price_max']) ? max(0, intval($keywords['price_max'])) : null;
-
-        //array_filter関数の結果を再び$keywordsに代入することで、フィルタリング
+        //キーワードをフィルタリングして空要素を取り除く
         $keywords = array_filter($keywords, function ($value) {
             return ($value !== null && $value !== false && $value !== '');
         });
 
+        // getPaginateByLimit にキーワードを渡す（空の場合も対応済み）
+        $menus = $menu->getPaginateByLimit(30, $keywords);
+
         return view('menus.index')->with([
-            'menus' => $menu->getPaginateByLimit(30, $keywords),
-            'keywords' => $keywords
+            'menus' => $menus,
+            'keywords' => $keywords,
         ]);
     }
     public function userIndex(SearchRequest $request, $userId, Menu $menu)

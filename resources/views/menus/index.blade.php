@@ -15,23 +15,11 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
                     </svg>
                 </div>
-                <input type="search" id="default-search" name="keyword[name]" value="{{ $keywords['name'] ?? '' }}" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="店名orメニュー名" required />
+                <input type="search" id="default-search" name="keyword[name]" value="{{ $keywords['name'] ?? '' }}" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="店名orメニュー名" />
                 <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">検索</button>
             </div>
         </form>
     </div>
-
-    {{-- 検索機能未使用
-    <div>
-        <form action="{{ route('index') }}" method="GET">
-    <input type="text" name="keyword[name]" value="{{ $keywords['name'] ?? '' }}" placeholder="店名orメニュー名">
-    <input type="number" name="keyword[count]" value="{{ $keywords['count'] ?? '' }}" placeholder="食べた回数" min="0">
-    <input type="number" name="keyword[price_min]" value="{{ $keywords['price_min'] ?? '' }}" placeholder="最低価格" min="0">
-    <input type="number" name="keyword[price_max]" value="{{ $keywords['price_max'] ?? '' }}" placeholder="最高価格" min="0">
-    <input type="submit" value="検索">
-    </form>
-    </div>
-    --}}
 
     <div class='menus'>
         @foreach ($menus as $menu)
@@ -60,7 +48,7 @@
 
                             <p class="text-gray-600 py-4 whitespace-pre-wrap">{!! nl2br(e($menu->body)) !!}</p>
                             <div class="text-sm font-semibold flex flex-row-reverse">
-                                <p>{{ $menu->user->name }}・{{ $menu->created_at->diffForHumans() }}</p>
+                                <p>{{ $menu->user->name }}・{{ $menu->updated_at->diffForHumans() }}</p>
                             </div>
                         </div>
                     </div>
