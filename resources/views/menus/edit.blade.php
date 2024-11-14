@@ -21,24 +21,26 @@
                 <p class="name__error" style="color:red">{{ $errors->first('menu.name') }}</p>
             </div>
             <div class="w-full flex flex-col">
-                <label for="price" class="font-semibold leading-none mt-4">価格</label>
+                <label for="price" class="font-semibold leading-none mt-4">価格（円）</label>
                 <input type="number" id="price" name="menu[price]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" value="{{ $menu->price }}">
                 <p class="name__error" style="color:red">{{ $errors->first('menu.price') }}</p>
             </div>
             <div class="w-full flex flex-col">
-                <label for="count" class="font-semibold leading-none mt-4">回数</label>
+                <label for="count" class="font-semibold leading-none mt-4">回数（回）</label>
                 <input type="number" id="count" name="menu[count]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" value="{{ $menu->count }}">
                 <p class="name__error" style="color:red">{{ $errors->first('menu.count') }}</p>
             </div>
             <div class="w-full flex flex-col">
                 <label for="body" class="font-semibold leading-none mt-4">メモ</label>
-                <textarea name="menu[body]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" id="body" cols="30" rows="10"> {{ $menu->body }}</textarea>
+                <textarea name="menu[body]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" id="body" cols="30" rows="10">{{old('menu.body', $menu->body)}}</textarea>
+                <p class="name__error" style="color:red">{{ $errors->first('menu.body') }}</p>
             </div>
             <div class="w-full flex flex-col">
-                <label for="image" class="font-semibold leading-none mt-4">画像（1MBまで）</label>
+                <label for="image" class="font-semibold leading-none mt-4">画像（2MBまで）</label>
                 <div>
                     <input id="image" type="file" name="menu[image_path]" accept="image/*">
                 </div>
+                <p class="name__error" style="color:red">{{ $errors->first('menu.image_path') }}</p>
                 <!-- 画像表示 -->
                 @if ($menu->image_path)
                 <p>画像を削除しますか？ <input type="checkbox" name="delete_image" value="true"></p>

@@ -263,6 +263,8 @@ return [
         'menu.name' => 'メニューの名前',
         'menu.price' => '価格',
         'menu.count' => '回数',
+        'menu.body' => 'メモ',
+        'menu.image_path' => '画像',
     ],
 
 ];
