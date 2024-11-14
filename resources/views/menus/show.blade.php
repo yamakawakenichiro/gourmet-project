@@ -103,15 +103,6 @@
             </div>
             @endforeach
 
-            {{-- 操作完了メッセージ--}}
-            @if(session('success'))
-            <div class="text-sm flex justify-center">
-                <div class="alert alert-success pt-4">
-                    {{ session('success') }}
-                </div>
-            </div>
-            @endif
-
             @if(auth()->check())
             <form method="POST" action="{{ route('comments.store', $menu->id) }}">
                 @csrf

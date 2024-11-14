@@ -4,11 +4,6 @@
             {{ __('メモの新規作成') }}
         </h2>
     </x-slot>
-    @if (session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-    @endif
 
     <div class="mx-4 sm:p-8">
         <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data">
@@ -51,7 +46,7 @@
                 <p class="name__error" style="color:red">{{ $errors->first('menu.image_path') }}</p>
             </div>
             <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 mt-4">
-                送信する
+                保存する
             </button>
         </form>
     </div>

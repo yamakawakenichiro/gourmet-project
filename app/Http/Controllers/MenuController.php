@@ -98,7 +98,7 @@ class MenuController extends Controller
         $menu->user_id = $request->user()->id;
         $menu->image_path = $imagePath;
         $menu->fill($input)->save();
-        return redirect()->route('index');
+        return redirect()->route('index')->with('message', '投稿を作成しました');
     }
     public function edit(Menu $menu)
     {
@@ -125,7 +125,7 @@ class MenuController extends Controller
         $menu->user_id = $request->user()->id;
         $menu->fill($input)->save();
 
-        return redirect()->route('show', ['menu' => $menu->id]);
+        return redirect()->route('show', ['menu' => $menu->id])->with('message', '投稿を更新しました');
     }
     public function delete(Menu $menu)
     {
@@ -135,6 +135,6 @@ class MenuController extends Controller
             Cloudinary::destroy($publicId);
         }
         $menu->delete();
-        return redirect()->route('index');
+        return redirect()->route('index')->with('message', '投稿を削除しました');
     }
 }

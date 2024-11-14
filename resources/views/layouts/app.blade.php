@@ -84,6 +84,11 @@
     <header class=" bg-white shadow">
     <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
         {{ $header }}
+        @if (session('message'))
+        <div class="alert alert-success border px-4 py-3 rounded relative bg-green-100 border-green-400 text-green-700">
+            {{ session('message') }}
+        </div>
+        @endif
     </div>
     </header>
     @endif
