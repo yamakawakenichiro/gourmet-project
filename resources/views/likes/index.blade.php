@@ -14,16 +14,21 @@
                         <div class="mt-4"></div>
                         <div class="flex">
                             @if ($menu->image_path)
-                            <div class="rounded-full overflow-hidden w-12 h-12">
+                            <div class="rounded-md overflow-hidden w-12 h-12">
                                 <img class="object-cover w-full h-full" src="{{ $menu->image_path }}" alt="Menu Image">
                             </div>
                             @endif
-                            <h1 class="text-lg text-gray-700 font-semibold hover:underline cursor-pointer float-left pt-4 ml-2">
-                                {{ $menu->shop_name }}/{{ $menu->name }} ({{ $menu->price }}円 {{ $menu->count }}回目)
-                            </h1>
+                            <div class="flex flex-col">
+                                <h1 class="text-lg text-gray-700 font-semibold float-left ml-2">
+                                    {{ $menu->shop_name }}
+                                </h1>
+                                <h1 class="text-lg text-gray-700 font-semibold float-left ml-2">
+                                    {{ $menu->name }} ({{ $menu->price }}円 {{ $menu->count }}回目)
+                                </h1>
+                            </div>
                         </div>
                         <hr class="w-full">
-                        <p class="mt-4 text-gray-600 py-4">{{ $menu->body }}</p>
+                        <p class="text-gray-600 py-4 whitespace-pre-wrap">{!! nl2br(e($menu->body)) !!}</p>
                         <div class="text-sm font-semibold flex flex-row-reverse">
                             <p>{{ $menu->user->name }}・{{ $menu->created_at->diffForHumans() }}</p>
                         </div>

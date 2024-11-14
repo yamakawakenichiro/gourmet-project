@@ -6,12 +6,15 @@
     </x-slot>
 
     <div class="mx-4 sm:p-8">
-        <div class="px-10 mt-4">
+        <div class="mt-4">
             <div class="bg-white w-full rounded-2xl px-10 pt-2 pb-8 shadow-lg hover:shadow-2xl transition duration-500">
                 <div class="mt-4">
-                    <div class="flex">
+                    <div class="flex flex-col">
                         <div class="text-lg text-gray-700 font-semibold float-left pt-4">
-                            [{{ $menu->shop_name }}] {{ $menu->name }} ({{ $menu->price }}円 {{ $menu->count }}回目)
+                            {{ $menu->shop_name }}
+                        </div>
+                        <div class="text-lg text-gray-700 font-semibold float-left pt-2">
+                            {{ $menu->name }}({{ $menu->price }}円 {{ $menu->count }}回目)
                         </div>
                     </div>
                     <hr class="w-full">
@@ -36,7 +39,6 @@
                         </button>
                     </form>
                 </div>
-                @else
                 @endif
                 <div class="flex items-center justify-end mt-2">
                     {{-- いいね機能 --}}
@@ -44,22 +46,22 @@
                     <form action="{{ route('like.delete', $menu->id) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="button btn btn-warning bg-red-500 hover:bg-red-700 text-white font-semibold text-xs py-2 px-4 rounded">いいね！を外す</button>
+                        <button type="submit" class="button btn btn-warning bg-red-500 hover:bg-red-700 text-white font-semibold text-xs py-2 px-4 rounded-md">いいね！を外す</button>
                     </form>
                     @else
                     <form action="{{ route('like.store', $menu->id) }}" method="POST">
                         @csrf
-                        <button type="submit" class="button btn btn-success bg-blue-500 hover:bg-blue-700 text-white font-semibold text-xs py-2 px-4 rounded">いいね！を付ける</button>
+                        <button type="submit" class="button btn btn-success bg-blue-500 hover:bg-blue-700 text-white font-semibold text-xs py-2 px-4 rounded-md">いいね！を付ける</button>
                     </form>
                     @endif
                     <div class="text-center">
-                        <span class="badge badge-pill badge-success ml-4 font-semibold text-xs">{{ $menu->like_users_count }}</span>
+                        <span class="badge badge-pill badge-success ml-2 font-semibold text-xs">{{ $menu->like_users_count }}</span>
                     </div>
                 </div>
                 @endauth
 
                 <div>
-                    <p class="text-gray-600 py-4">{{ $menu->body }}</p>
+                    <p class="text-gray-600 py-4 whitespace-pre-wrap">{!! nl2br(e($menu->body)) !!}</p>
                     <div>
                         @if ($menu->image_path)
                         <img src="{{ $menu->image_path }}" alt="Menu Image" class="mx-auto" style="max-width: 100%; height: 150px;">
@@ -68,7 +70,8 @@
                     <div class="text-sm font-semibold flex flex-row-reverse mt-2">
                         <p>{{ $menu->user->name }}・{{ $menu->created_at->diffForHumans() }}</p>
                     </div>
-                    @auth
+
+                    @if ($menu->user_id !== auth()->id())
                     <div class="text-sm font-semibold flex flex-row-reverse mt-2">
                         @php
                         $isFollowing = auth()->check() && auth()->user()->isFollowing($user);
@@ -84,7 +87,7 @@
                         {{-- 報告ボタン --}}
                         <div class="report"><a href='/menus/{{ $menu->id }}/report'>報告</a></div>
                     </div>
-                    @endauth
+                    @endif
                 </div>
             </div>
 
@@ -99,6 +102,15 @@
                 </div>
             </div>
             @endforeach
+
+            {{-- 操作完了メッセージ--}}
+            @if(session('success'))
+            <div class="text-sm flex justify-center">
+                <div class="alert alert-success pt-4">
+                    {{ session('success') }}
+                </div>
+            </div>
+            @endif
 
             @if(auth()->check())
             <form method="POST" action="{{ route('comments.store', $menu->id) }}">
@@ -116,13 +128,6 @@
 
         </div>
     </div>
-
-    {{-- 操作完了メッセージ--}}
-    @if(session('success'))
-    <div class="alert alert-success">
-        {{ session('success') }}
-    </div>
-    @endif
 
     <script>
         function deleteMenu(id) {

@@ -62,7 +62,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('follow.index', ['user' => Auth::id()])">
-                            {{ __('フォロー・フォロワー') }}
+                            {{ __('フォロー中・フォロワー') }}
                         </x-dropdown-link>
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
@@ -125,7 +125,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('follow.index', ['user' => Auth::id()])">
-                    {{ __('フォロー・フォロワー') }}
+                    {{ __('フォロー中・フォロワー') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}

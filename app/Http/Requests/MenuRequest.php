@@ -23,8 +23,8 @@ class MenuRequest extends FormRequest
     {
         return [
             'menu.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'menu.shop_name' => 'required|string|max:50',
-            'menu.name' => 'required|string|max:50',
+            'menu.shop_name' => 'required|string|max:25',
+            'menu.name' => 'required|string|max:25',
             'menu.price' => 'required|integer|min:0|max:999999',
             'menu.count' => 'required|integer|min:0|max:100',
 
