@@ -14,7 +14,7 @@
         <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <button type="button" id="aiGenerateButton" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150 mt-4">
-                自動生成
+                自動入力
             </button>
             <div class="md:flex items-center mt-6">
                 <div class="w-full flex flex-col">
