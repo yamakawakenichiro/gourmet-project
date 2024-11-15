@@ -46,7 +46,7 @@
                             </div>
                             @endif
 
-                            <p class="text-gray-600 py-4 whitespace-pre-wrap">{!! nl2br(e($menu->body)) !!}</p>
+                            <p class="text-gray-600 py-4 whitespace-pre-wrap">{{$menu->body}}</p>
                             <div class="text-sm font-semibold flex flex-row-reverse">
                                 <p>{{ $menu->user->name }}・{{ $menu->updated_at->diffForHumans() }}</p>
                             </div>

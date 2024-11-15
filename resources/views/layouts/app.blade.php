@@ -99,6 +99,12 @@
             {{ $slot }}
         </div>
     </main>
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 lg:px-6">
+        <hr class="mt-2 border-gray-300 rounded">
+        <footer class="flex justify-center">
+            <p class="my-3 text-gray-900 text-sm">&copy; 2024 Yamakawa</p>
+        </footer>
+    </div>
 </body>
 
 </html>

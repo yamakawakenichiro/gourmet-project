@@ -8,9 +8,6 @@
     <div class="mx-4 sm:p-8">
         <form action="{{ route('store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <button type="button" id="aiGenerateButton" class="inline-flex items-center px-4 py-2 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-700 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150 mt-4">
-                自動入力
-            </button>
             <div class="md:flex items-center mt-6">
                 <div class="w-full flex flex-col">
                     <label for="shop_name" class="font-semibold leading-none mt-4">お店の名前</label>
@@ -34,8 +31,13 @@
                 <p class="name__error" style="color:red">{{ $errors->first('menu.count') }}</p>
             </div>
             <div class="w-full flex flex-col">
-                <label for="body" class="font-semibold leading-none mt-4">メモ</label>
-                <textarea name="menu[body]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" id="body" cols="30" rows="10">{{old('menu.body')}}</textarea>{{--ここの文は改行すると、スマホ入力時に謎の空白ができてしまう。--}}
+                <div class="flex items-center">
+                    <label for="body" class="font-semibold leading-none mt-4">メモ</label>
+                    <button type="button" id="aiGenerateButton" class="inline-flex items-center px-1 py-1 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150 mt-2 ml-2">
+                        自動入力
+                    </button>
+                </div>
+                <textarea id="body" name="menu[body]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" cols="30" rows="10">{{old('menu.body')}}</textarea>{{--ここの文は改行すると、スマホ入力時に謎の空白ができてしまう。--}}
                 <p class="name__error" style="color:red">{{ $errors->first('menu.body') }}</p>
             </div>
             <div class="w-full flex flex-col">
@@ -51,29 +53,38 @@
         </form>
     </div>
 
-    <!-- ユーザー入力部分 -->
-    <textarea id="userInput" placeholder="ここに文を入力してください"></textarea>
-
-    <div id="aiDescription">
-        <!-- AIの説明がここに挿入されます -->
-    </div>
-
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> <!-- axios -->
     <script>
         // ユーザーがした入力の処理
         document.getElementById('aiGenerateButton').addEventListener('click', function() {
-            const sentence = document.getElementById('userInput').value.trim(); // トリムして空白のみの入力を防ぐ
-            // 空欄アラート
-            if (!sentence) {
-                alert("入力欄に文章を入力してください。"); // 入力が空の場合は警告を表示
-                return; // 処理を中断
+            const sentence1 = document.getElementById('shop_name').value.trim(); // 最初の入力欄の値を取得
+            const sentence2 = document.getElementById('name').value.trim(); // 2番目の入力欄の値を取得
+
+            // 両方の入力が空白のみでないかをチェック
+            if (!sentence1 && !sentence2) {
+                alert("お店とメニューの名前を入力してください。");
+                return;
             }
-            // ルート
+
+            // 入力を結合する場合（例: 両方の文章を一緒に送信）
+            const combinedSentences = `${sentence1}の${sentence2}に関して、食べた後の感想を普通体でメモをしてください。400文字以内の制限。箇条書き。`;
+            // console.log(combinedSentences);
             axios.post('/gemini', {
-                sentence: sentence,
+                sentence: combinedSentences,
                 _token: '{{ csrf_token() }}'
             }).then(response => {
-                document.getElementById('body').innerText = response.data.aiGeneratedDescription;
+                // console.log(response.data.aiGeneratedDescription);
+                // 「**」を削除し、「*」を「・」に置換
+                const processedContent = response.data.aiGeneratedDescription
+                    .replace(/\*\*/g, '') // 「**」を削除
+                    .replace(/\*/g, '・'); // 「*」を「・」に置換
+
+                // 既存のtextarea内容を取得し、新しいデータをその下に追加
+                const bodyTextarea = document.getElementById('body');
+                const currentText = bodyTextarea.value;
+
+                // 新しい内容を追加（改行を加えて見やすくする）
+                bodyTextarea.value = currentText + (currentText ? "\n" : "") + processedContent;
             }).catch(error => {
                 console.error('AIによる説明の取得に失敗しました。', error);
             });
