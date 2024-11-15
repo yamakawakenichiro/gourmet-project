@@ -1,9 +1,22 @@
 @props(['messages'])
 
 @if ($messages)
-    <ul {{ $attributes->merge(['class' => 'text-sm text-red-600 space-y-1']) }}>
-        @foreach ((array) $messages as $message)
-            <li>{{ $message }}</li>
-        @endforeach
-    </ul>
+<ul {{ $attributes->merge(['class' => 'text-sm text-red-600 space-y-1']) }}>
+    @foreach ((array) $messages as $message)
+    <li>{{ $message }}</li>
+    @endforeach
+</ul>
 @endif
+
+{{--
+配列形式のメッセージを表示するためのコンポーネントを定義しています。特に、エラーメッセージや通知メッセージを表示する用途に適しています。
+text-sm: 小さめのテキストサイズを指定。
+text-red-600: テキストの色を赤色に指定、典型的にはエラーメッセージなど警告のメッセージを示すために使用。
+space-y-1: 各リスト項目間に垂直方向のスペースを設ける。
+
+:messagesは、コンポーネントに渡される属性で、この場合は入力フィールドのエラーメッセージを受け取ります。:を前に付けることで、Bladeは渡された値をPHPとして評価します。
+$errorsはLaravelのセッションで利用可能なバリデーションエラーバッグであり、get('email')は特定のフィールド（ここではemail）に関連するエラーメッセージの配列を取得します。
+この設定によって、emailフィールドに問題がある場合、関連するすべてのエラーメッセージが<x-input-error>コンポーネントに渡されます。
+mt-2クラスを使って、エラーメッセージコンポーネントにマージンを追加し、上部に少しスペースを確保
+<x-input-error>は、通常、特定の入力フィールドの直下に配置され、そのフィールドに何らかのバリデーションエラーが発生した場合に、ユーザーにフィードバックを与えるために使用されます。
+--}}

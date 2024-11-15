@@ -5,22 +5,46 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
+                    <a href="{{ route('index') }}">
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
 
+                @auth
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
                     <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
-                        {{ __('全投稿') }}
+                        {{ __('HOME') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('create')" :active="request()->routeIs('create')">{{--request()->routeIs('create') は、現在のルート名が create であるかを判定します。現在のページが create ルートの場合に true を返し、リンクが「アクティブ」状態になります。--}}
+                        {{ __('新規作成') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('user.index', ['user' => Auth::id()])" :active="request()->routeIs('user.index') && request()->route('user') == Auth::id()">
+                        {{ __('自分のメモ') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('like.index', ['user' => Auth::id()])" :active="request()->routeIs('like.index', ['user' => Auth::id()])">
+                        {{ __('いいねしたメモ') }}
                     </x-nav-link>
                 </div>
+                @else
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
+                        {{ __('HOME') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                        {{ __('ログイン') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                        {{ __('登録') }}
+                    </x-nav-link>
+                </div>
+                @endauth
             </div>
 
+            @auth
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 <x-dropdown align="right" width="48">
@@ -37,6 +61,9 @@
                     </x-slot>
 
                     <x-slot name="content">
+                        <x-dropdown-link :href="route('follow.index', ['user' => Auth::id()])">
+                            {{ __('フォロー中・フォロワー') }}
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
@@ -54,6 +81,7 @@
                     </x-slot>
                 </x-dropdown>
             </div>
+            @endauth
 
             <!-- Hamburger -->
             <div class="-me-2 flex items-center sm:hidden">
@@ -67,11 +95,24 @@
         </div>
     </div>
 
+    @auth
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('index')" :active="request()->routeIs('index')">
+                {{ __('HOME') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('create')" :active="request()->routeIs('create')">
+                {{ __('新規作成') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('user.index', ['user' => Auth::id()])" :active="request()->routeIs('user.index') && request()->route('user') == Auth::id()">
+                {{ __('自分のメモ') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('like.index', ['user' => Auth::id()])" :active="request()->routeIs('like.index', ['user' => Auth::id()])">
+                {{ __('いいねしたメモ') }}
             </x-responsive-nav-link>
         </div>
 
@@ -83,6 +124,9 @@
             </div>
 
             <div class="mt-3 space-y-1">
+                <x-responsive-nav-link :href="route('follow.index', ['user' => Auth::id()])">
+                    {{ __('フォロー中・フォロワー') }}
+                </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
@@ -100,4 +144,20 @@
             </div>
         </div>
     </div>
+    @else
+    <!-- Responsive Navigation Menu -->
+    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        <div class="pt-2 pb-3 space-y-1">
+            <x-responsive-nav-link :href="route('index')" :active="request()->routeIs('index')">
+                {{ __('HOME') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                {{ __('ログイン') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                {{ __('登録') }}
+            </x-responsive-nav-link>
+        </div>
+    </div>
+    @endauth
 </nav>

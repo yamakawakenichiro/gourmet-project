@@ -32,4 +32,11 @@ class FollowController extends Controller
         }
         return redirect()->back();
     }
+
+    public function index(User $user)
+    {
+        return view('follow.index')->with([
+            'user' => $user,
+        ]);
+    }
 }

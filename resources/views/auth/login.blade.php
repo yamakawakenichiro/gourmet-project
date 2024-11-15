@@ -24,12 +24,20 @@
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
-        <!-- Remember Me -->
+        <!-- Remember Me --> {{--LoginRequestクラス rememberオプションをAuth::attemptメソッドに渡すことで、ユーザーが「Remember Me」チェックボックスを選択した場合、長期間のセッションを維持できるようになります。--}}
         <div class="block mt-4">
             <label for="remember_me" class="inline-flex items-center">
                 <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
                 <span class="ms-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
             </label>
+        </div>
+
+        <!-- Google login -->
+        <div class="mt-4 dark:bg-gray-800">
+            <a href="{{ route('auth.google') }}" class="shadow-sm px-4 py-2 border flex gap-2 border-slate-200 dark:border-slate-700 rounded-lg text-slate-700 dark:text-slate-200 hover:border-slate-400 dark:hover:border-slate-500 hover:text-slate-900 dark:hover:text-slate-300 hover:shadow transition duration-150">
+                <img class="w-6 h-6" src="https://www.svgrepo.com/show/475656/google-color.svg" loading="lazy" alt="google logo">
+                <span>Googleでログイン</span>
+            </a>
         </div>
 
         <div class="flex items-center justify-end mt-4">
@@ -43,10 +51,5 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
-
-        <!-- Google login -->
-        <a href="{{ route('auth.google') }}" class="btn btn-primary">
-            Googleでログイン
-        </a>
     </form>
 </x-guest-layout>

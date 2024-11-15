@@ -20,26 +20,66 @@ class MenuController extends Controller
     {
         $keywords = $request->input('keyword', []);
 
-        // ＜条件式 ? 式1 : 式2＞  intval()は数値型でないデータを整数に変換 max(0, ...)は0とその整数値のうち大きい方を選ぶための関数
-        $keywords['count'] = isset($keywords['count']) ? max(0, intval($keywords['count'])) : null;
-        $keywords['price_min'] = isset($keywords['price_min']) ? max(0, intval($keywords['price_min'])) : null;
-        $keywords['price_max'] = isset($keywords['price_max']) ? max(0, intval($keywords['price_max'])) : null;
-
-        //array_filter関数の結果を再び$keywordsに代入することで、フィルタリング
+        //キーワードをフィルタリングして空要素を取り除く
         $keywords = array_filter($keywords, function ($value) {
             return ($value !== null && $value !== false && $value !== '');
         });
 
+        // getPaginateByLimit にキーワードを渡す（空の場合も対応済み）
+        $menus = $menu->getPaginateByLimit(30, $keywords);
+
+        $title = 'メモの一覧';
+
         return view('menus.index')->with([
-            'menus' => $menu->getPaginateByLimit(10, $keywords),
-            'keywords' => $keywords
+            'menus' => $menus,
+            'keywords' => $keywords,
+            'title' => $title,
         ]);
     }
+    public function userIndex(SearchRequest $request, $userId)
+    {
+        $keywords = $request->input('keyword', []);
+
+        //キーワードをフィルタリングして空要素を取り除く
+        $keywords = array_filter($keywords, function ($value) {
+            return ($value !== null && $value !== false && $value !== '');
+        });
+
+        // ログイン中のユーザーを取得
+        $currentUser = Auth::user();
+
+        // ユーザー情報の取得
+        $user = User::findOrFail($userId);
+
+        // 該当ユーザーのメニューを取得
+        $menus = Menu::where('user_id', $userId)
+            ->getPaginateByLimit(30, $keywords);
+
+        // $title を動的に設定
+        if ($currentUser->id === $user->id) {
+            $title = '自分のメモ';
+        } else {
+            $title = "{$user->name}さんのメモ"; // 該当ユーザーの名前を表示
+        }
+
+        return view('menus.index')->with([
+            'menus' => $menus,
+            'user' => $user,
+            'keywords' => $keywords,
+            'title' => $title,
+        ]);
+    }
+
     public function show(Menu $menu)
     {
-        $like = $menu->like_users()->count();
-        $user = User::find($menu->user_id);
-        return view('menus.show')->with(['menu' => $menu, 'like' => $like, 'user' => $user]);
+        $menu->loadCount('like_users');
+        $user = $menu->user; // 既にリレーションによる利用が適切
+
+        return view('menus.show')->with([
+            'menu' => $menu,
+            'like' => $menu->like_users_count,
+            'user' => $user
+        ]);
     }
     public function create()
     {
@@ -58,7 +98,7 @@ class MenuController extends Controller
         $menu->user_id = $request->user()->id;
         $menu->image_path = $imagePath;
         $menu->fill($input)->save();
-        return redirect()->route('index');
+        return redirect()->route('index')->with('message', '投稿を作成しました');
     }
     public function edit(Menu $menu)
     {
@@ -85,7 +125,7 @@ class MenuController extends Controller
         $menu->user_id = $request->user()->id;
         $menu->fill($input)->save();
 
-        return redirect()->route('show', ['menu' => $menu->id]);
+        return redirect()->route('show', ['menu' => $menu->id])->with('message', '投稿を更新しました');
     }
     public function delete(Menu $menu)
     {
@@ -95,6 +135,6 @@ class MenuController extends Controller
             Cloudinary::destroy($publicId);
         }
         $menu->delete();
-        return redirect()->route('index');
+        return redirect()->route('index')->with('message', '投稿を削除しました');
     }
 }

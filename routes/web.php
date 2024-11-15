@@ -32,6 +32,10 @@ require __DIR__ . '/auth.php';
 Route::get('/', [MenuController::class, 'index'])->name('index');
 Route::get('/menus/{menu}', [MenuController::class, 'show'])->name('show');
 
+// グーグルログイン
+Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth'])->name('auth.google');
+Route::get('/login/callback', [GoogleLoginController::class, 'authGoogleCallback']);
+
 //ダッシュボード（デフォルト）
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -50,8 +54,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/reports/{menu}', [ReportController::class, 'store'])->name('report.store');
 
     //いいね機能
-    Route::post('/reports/{menu}/like', [LikeController::class, 'store'])->name('like.store');
-    Route::delete('/reports/{menu}/like', [LikeController::class, 'delete'])->name('like.delete');
+    Route::get('/menus/{user}/like', [LikeController::class, 'index'])->name('like.index');
+    Route::post('/menus/{menu}/like', [LikeController::class, 'store'])->name('like.store');
+    Route::delete('/menus/{menu}/like', [LikeController::class, 'delete'])->name('like.delete');
 
     //プロファイル（デフォルト）
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -59,16 +64,16 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // フォロー・アンフォロー
+    Route::get('/users/{user}/follow', [FollowController::class, 'index'])->name('follow.index');
     Route::post('/users/{user}/follow', [FollowController::class, 'follow'])->name('follow');
     Route::post('/users/{user}/unfollow', [FollowController::class, 'unfollow'])->name('unfollow');
-
-    // グーグルログイン
-    Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth'])->name('auth.google');
-    Route::get('/login/callback', [GoogleLoginController::class, 'authGoogleCallback']);
 
     // コメント
     Route::post('/menus/{menu}/comments', [CommentController::class, 'store'])->name('comments.store');
 
     // Gemini
     Route::post('/gemini', [GeminiController::class, 'post'])->name('gemini.post');
+
+    // ユーザー毎の
+    Route::get('/user/{user}/menus', [MenuController::class, 'userIndex'])->name('user.index');
 });

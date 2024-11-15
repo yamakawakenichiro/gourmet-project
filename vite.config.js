@@ -6,9 +6,21 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
+                'resources/css/pagination.css',
                 'resources/js/app.js',
+                'resources/js/map.js'
             ],
             refresh: true,
         }),
     ],
+
+    server: {
+        host: true,
+        hmr: {
+            host: 'localhost',
+        },
+        watch: {
+          usePolling: true,
+        },
+    },
 });

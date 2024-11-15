@@ -22,9 +22,13 @@ class MenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'menu.image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'menu.shop_name' => 'required|string|max:50',
-            'menu.name' => 'required|string|max:50',
+            'menu.image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'menu.shop_name' => 'required|string|max:25',
+            'menu.name' => 'required|string|max:25',
+            'menu.price' => 'required|integer|min:0|max:999999',
+            'menu.count' => 'required|integer|min:0|max:100',
+            'menu.body' => 'nullable|max:500',
+
             'menu.latitude' => 'nullable|numeric',
             'menu.longitude' => 'nullable|numeric',
         ];

@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Log;
 
 class Menu extends Model
@@ -23,10 +24,11 @@ class Menu extends Model
         'longitude',
     ];
 
-    public function getPaginateByLimit(int $limit_count = 10, $keywords)
+    public function scopeGetPaginateByLimit(Builder $query, int $limitCount = 30, array $keywords = [])
     {
-        $query = $this->orderBy('updated_at', 'DESC');
+        $query->orderBy('updated_at', 'DESC');
 
+        // キーワードが存在する場合に条件を追加
         if (!empty($keywords['name'])) {
             $query->where(function ($q) use ($keywords) {
                 $q->where('shop_name', 'LIKE', "%{$keywords['name']}%")
@@ -34,19 +36,7 @@ class Menu extends Model
             });
         }
 
-        if (isset($keywords['count']) && $keywords['count'] !== '') {
-            $query->where('count', $keywords['count']);
-        }
-
-        if (isset($keywords['price_min']) && $keywords['price_min'] !== '') {
-            $query->where('price', '>=', $keywords['price_min']);
-        }
-
-        if (isset($keywords['price_max']) && $keywords['price_max'] !== '') {
-            $query->where('price', '<=', $keywords['price_max']);
-        }
-
-        return $query->paginate($limit_count);
+        return $query->paginate($limitCount);
     }
 
     public function user()
@@ -55,7 +45,7 @@ class Menu extends Model
     }
     public function like_users()
     {
-        return $this->belongsToMany(User::class, 'likes', 'user_id', 'menu_id');
+        return $this->belongsToMany(User::class, 'likes', 'menu_id', 'user_id');
     }
     public function comments()
     {

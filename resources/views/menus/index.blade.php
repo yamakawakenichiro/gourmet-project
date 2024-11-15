@@ -1,116 +1,65 @@
-<!DOCTYPE html>
-<html lang="ja">
+<x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            {{ $title }}
+        </h2>
+    </x-slot>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>グルメモ</title>
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-    @vite('resources/css/app.css')
-    <script>
-        // 現在地取得処理
-        function initMap() {
-            // Geolocation APIに対応している
-            if (navigator.geolocation) {
-                // 現在地を取得
-                navigator.geolocation.getCurrentPosition(
-                    // 取得成功した場合
-                    function(position) {
-                        // 緯度・経度を変数に格納
-                        var mapLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                        // var mapLatLng = new google.maps.LatLng(37.57, 126.97);//テスト（韓国のソウル）
-                        // マップオプションを変数に格納
-                        var mapOptions = {
-                            zoom: 15, // 拡大倍率
-                            center: mapLatLng // 緯度・経度
-                        };
-                        // マップオブジェクト作成
-                        var map = new google.maps.Map(
-                            document.getElementById("map"), // マップを表示する要素
-                            mapOptions // マップオプション
-                        );
-                        //　マップにマーカーを表示する
-                        var marker = new google.maps.Marker({
-                            map: map, // 対象の地図オブジェクト
-                            position: mapLatLng // 緯度・経度
-                        });
-                    },
-                    // 取得失敗した場合
-                    function(error) {
-                        // エラーメッセージを表示
-                        switch (error.code) {
-                            case 1: // PERMISSION_DENIED
-                                alert("位置情報の利用が許可されていません");
-                                break;
-                            case 2: // POSITION_UNAVAILABLE
-                                alert("現在位置が取得できませんでした");
-                                break;
-                            case 3: // TIMEOUT
-                                alert("タイムアウトになりました");
-                                break;
-                            default:
-                                alert("その他のエラー(エラーコード:" + error.code + ")");
-                                break;
-                        }
-                    }
-                );
-                // Geolocation APIに対応していない
-            } else {
-                alert("この端末では位置情報が取得できません");
-            }
-        }
-    </script>
-</head>
-
-<body>
-    <div id="map" style="width:400px; height:300px"></div>
-
-    @if (Route::has('login'))
-    <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-        @auth
-        <a href='/menus/create'>add投稿</a>
-        <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-        @else
-        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
-
-        @if (Route::has('register'))
-        <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-        @endif
-        @endauth
-    </div>
-    @endif
-
-    {{-- 検索機能ここから --}}
-    <div>
-        <form action="{{ route('index') }}" method="GET">
-            <input type="text" name="keyword[name]" value="{{ $keywords['name'] ?? '' }}" placeholder="店名orメニュー名">
-            <input type="number" name="keyword[count]" value="{{ $keywords['count'] ?? '' }}" placeholder="食べた回数" min="0">
-            <input type="number" name="keyword[price_min]" value="{{ $keywords['price_min'] ?? '' }}" placeholder="最低価格" min="0">
-            <input type="number" name="keyword[price_max]" value="{{ $keywords['price_max'] ?? '' }}" placeholder="最高価格" min="0">
-            <input type="submit" value="検索">
+    {{-- 検索機能 --}}
+    <div class="mt-6 mx-4">
+        <form class="max-w-md mx-auto" action="{{ route('index') }}" method="GET">
+            <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">search</label>
+            <div class="relative">
+                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+                    </svg>
+                </div>
+                <input type="search" id="default-search" name="keyword[name]" value="{{ $keywords['name'] ?? '' }}" class="block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-white focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="店名orメニュー名" />
+                <button type="submit" class="text-white absolute end-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">検索</button>
+            </div>
         </form>
     </div>
-    {{--検索機能ここまで--}}
-
 
     <div class='menus'>
         @foreach ($menus as $menu)
-        <div class='menu'>
-            <a href="/menus/{{ $menu->id }}">
-                <p class='shop_name'>{{ $menu->shop_name }}</p>
-                <p class='name'>{{ $menu->name }}</p>
-                <p class='count'>{{ $menu->count }}</p>
-            </a>
+        <div class="menu mx-4 sm:p-8">
+            <div class="mt-4">
+                <a href="/menus/{{ $menu->id }}">
+                    <div class="bg-white w-full rounded-2xl px-10 pt-2 pb-8 shadow-lg hover:shadow-2xl cursor-pointer transition duration-500">
+                        <div class="mt-4">
+                            <div class="flex">
+                                <div class="flex flex-col">
+                                    <h1 class="text-lg text-gray-700 font-semibold float-left">
+                                        {{ $menu->shop_name }}
+                                    </h1>
+                                    <h1 class="text-lg text-gray-700 font-semibold float-left">
+                                        {{ $menu->name }} ({{ $menu->price }}円 {{ $menu->count }}回目)
+                                    </h1>
+                                </div>
+                            </div>
+                            <hr class="w-full">
+
+                            @if ($menu->image_path)
+                            <div class="rounded-md overflow-hidden w-12 h-12 mt-4">
+                                <img class="object-cover w-full h-full" src="{{ $menu->image_path }}" alt="Menu Image">
+                            </div>
+                            @endif
+
+                            <p class="text-gray-600 py-4 whitespace-pre-wrap">{!! nl2br(e($menu->body)) !!}</p>
+                            <div class="text-sm font-semibold flex flex-row-reverse">
+                                <p>{{ $menu->user->name }}・{{ $menu->updated_at->diffForHumans() }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
         </div>
         @endforeach
     </div>
-    <div class='paginate'>
+
+    <div class='paginate flex items-center justify-center mt-4'>
         {{ $menus->links() }}
     </div>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google-map.apikey') }}&callback=initMap"></script>
-</body>
 
-</html>
+</x-app-layout>

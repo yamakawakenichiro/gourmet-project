@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -41,9 +42,18 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
+        $user = User::where('email', $this->input('email'))->first();
+
+        // Googleアカウントかどうかをチェック $user: ユーザーオブジェクトが存在するかどうか（つまり、指定されたメールアドレスがデータベースに存在するか）。
+        //$user->google_id: ユーザーがGoogleアカウントで登録されているかどうか（google_idがnullでないか）。
+        if ($user && $user->google_id) {
+            throw ValidationException::withMessages([
+                'email' => 'このメールアドレスはGoogleアカウントで登録されています。Googleでログインしてください。',
+            ]);
+        }
+        // `remember`オプションを追加 
         if (! Auth::attempt($this->only('email', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
-
             throw ValidationException::withMessages([
                 'email' => trans('auth.failed'),
             ]);
@@ -80,6 +90,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('email')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('email')) . '|' . $this->ip());
     }
 }
