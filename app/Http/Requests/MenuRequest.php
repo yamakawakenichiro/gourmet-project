@@ -22,7 +22,7 @@ class MenuRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'menu.image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'menu.image_path' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:4096',
             'menu.shop_name' => 'required|string|max:25',
             'menu.name' => 'required|string|max:25',
             'menu.price' => 'required|integer|min:0|max:999999',

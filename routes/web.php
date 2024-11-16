@@ -10,6 +10,7 @@ use App\Http\Controllers\FollowController;
 use App\Http\Controllers\GoogleLoginController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GeminiController;
+use App\Http\Controllers\MapController;
 use App\Models\Like;
 use App\Models\Menu;
 use App\Models\Report;
@@ -35,11 +36,6 @@ Route::get('/menus/{menu}', [MenuController::class, 'show'])->name('show');
 // グーグルログイン
 Route::get('/auth/redirect', [GoogleLoginController::class, 'getGoogleAuth'])->name('auth.google');
 Route::get('/login/callback', [GoogleLoginController::class, 'authGoogleCallback']);
-
-//ダッシュボード（デフォルト）
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     //投稿CRUD 
@@ -74,6 +70,9 @@ Route::middleware('auth')->group(function () {
     // Gemini
     Route::post('/gemini', [GeminiController::class, 'post'])->name('gemini.post');
 
-    // ユーザー毎の
+    // ユーザー毎
     Route::get('/user/{user}/menus', [MenuController::class, 'userIndex'])->name('user.index');
+
+    // マップ
+    Route::get('/map', [MapController::class, 'Index'])->name('map.index');
 });

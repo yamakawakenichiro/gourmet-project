@@ -61,7 +61,7 @@
                 @endauth
 
                 <div>
-                    <p class="text-gray-600 py-4 whitespace-pre-wrap">{!! nl2br(e($menu->body)) !!}</p>
+                    <p class="text-gray-600 py-4 whitespace-pre-wrap">{{$menu->body}}</p>
                     <div>
                         @if ($menu->image_path)
                         <img src="{{ $menu->image_path }}" alt="Menu Image" class="mx-auto" style="max-width: 100%; height: 150px;">
