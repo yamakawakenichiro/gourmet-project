@@ -36,7 +36,7 @@
                 <p class="name__error" style="color:red">{{ $errors->first('menu.body') }}</p>
             </div>
             <div class="w-full flex flex-col">
-                <label for="image" class="font-semibold leading-none mt-4">画像（2MBまで）</label>
+                <label for="image" class="font-semibold leading-none mt-4">画像（4MBまで）</label>
                 <div>
                     <input id="image" type="file" name="menu[image_path]" accept="image/*">
                 </div>

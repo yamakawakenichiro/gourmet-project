@@ -13,9 +13,6 @@
                 @auth
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
                     <x-nav-link :href="route('index')" :active="request()->routeIs('index')">
                         {{ __('HOME') }}
                     </x-nav-link>
@@ -64,6 +61,9 @@
                         <x-dropdown-link :href="route('follow.index', ['user' => Auth::id()])">
                             {{ __('フォロー中・フォロワー') }}
                         </x-dropdown-link>
+                        <x-dropdown-link :href="route('map.index')">
+                            {{ __('マップ') }}
+                        </x-dropdown-link>
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
@@ -99,9 +99,6 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('index')" :active="request()->routeIs('index')">
                 {{ __('HOME') }}
             </x-responsive-nav-link>
@@ -126,6 +123,9 @@
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('follow.index', ['user' => Auth::id()])">
                     {{ __('フォロー中・フォロワー') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('map.index')">
+                    {{ __('マップ') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}

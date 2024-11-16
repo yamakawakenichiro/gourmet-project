@@ -10,7 +10,12 @@
             @csrf
             <div class="md:flex items-center mt-6">
                 <div class="w-full flex flex-col">
-                    <label for="shop_name" class="font-semibold leading-none mt-4">お店の名前</label>
+                    <div class="flex items-center">
+                        <label for="shop_name" class="font-semibold leading-none mt-4">お店の名前</label>
+                        <button type="button" id="mapButton" class="inline-flex items-center px-1 py-1 bg-blue-500 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-blue-900 active:bg-blue-900 focus:outline-none focus:border-blue-900 focus:ring ring-blue-300 disabled:opacity-25 transition ease-in-out duration-150 mt-2 ml-2">
+                            マップで確認
+                        </button>
+                    </div>
                     <input type="text" id="shop_name" name="menu[shop_name]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" value="{{ old('menu.shop_name') }}">
                     <p class="shop_name__error" style="color:red">{{ $errors->first('menu.shop_name') }}</p>
                 </div>
@@ -41,7 +46,7 @@
                 <p class="name__error" style="color:red">{{ $errors->first('menu.body') }}</p>
             </div>
             <div class="w-full flex flex-col">
-                <label for="image" class="font-semibold leading-none mt-4">画像（2MBまで）</label>
+                <label for="image" class="font-semibold leading-none mt-4">画像（4MBまで）</label>
                 <div>
                     <input id="image" type="file" name="menu[image_path]" accept="image/*">
                 </div>
@@ -67,7 +72,7 @@
             }
 
             // 入力を結合する場合（例: 両方の文章を一緒に送信）
-            const combinedSentences = `${sentence1}の${sentence2}に関して、食べた後の感想を普通体でメモをしてください。400文字以内の制限。箇条書き。`;
+            const combinedSentences = `${sentence1}の${sentence2}に関して、食べた後の感想を普通体でメモをしてください。200文字以内の制限。箇条書き。行間を空けない。`;
             // console.log(combinedSentences);
             axios.post('/gemini', {
                 sentence: combinedSentences,
@@ -88,6 +93,11 @@
             }).catch(error => {
                 console.error('AIによる説明の取得に失敗しました。', error);
             });
+        });
+
+        // マップへ飛ぶ。type="button": ただのボタンになります。JavaScriptを使用して何かアクションをしたり、クリックイベントをリッスンするのに使います。このボタン自体ではフォームは送信されません。
+        document.getElementById('mapButton').addEventListener('click', function() {
+            window.location.href = "{{ route('map.index') }}";
         });
     </script>
 
