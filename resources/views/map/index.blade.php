@@ -20,23 +20,24 @@
     'resources/css/app.css',
     'resources/css/pagination.css',
     'resources/js/app.js',
-    'resources/js/map.js'
     ])
     <script>
-        // 現在地取得処理(viteでmap.jsを入れているが、リロードするとmapが消えてしまうため、以下にも記載)
         function initMap() {
             // Geolocation APIに対応している
             if (navigator.geolocation) {
                 // 現在地を取得
-                navigator.geolocation.getCurrentPosition(
+                navigator.geolocation.getCurrentPosition( //navigator.geolocation.getCurrentPositionメソッドを実行すること自体が、ユーザーから位置情報の許可を取得するトリガーになります。
                     // 取得成功した場合
                     function(position) {
+                        console.log("位置情報の取得に成功しました", position); // コンソールに成功した緯度・経度を出力
+                        console.log("現在地の緯度: " + position.coords.latitude + " 経度: " + position.coords.longitude);
                         // 緯度・経度を変数に格納
                         var mapLatLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-                        // var mapLatLng = new google.maps.LatLng(37.57, 126.97);//テスト（韓国のソウル）
+                        // var mapLatLng = new google.maps.LatLng(37.57, 126.97); //テスト（韓国のソウル）
+                        console.log(mapLatLng);
                         // マップオプションを変数に格納
                         var mapOptions = {
-                            zoom: 15, // 拡大倍率
+                            zoom: 13, // 拡大倍率
                             center: mapLatLng // 緯度・経度
                         };
                         // マップオブジェクト作成
@@ -45,13 +46,14 @@
                             mapOptions // マップオプション
                         );
                         //　マップにマーカーを表示する
-                        var marker = new google.maps.Marker({
-                            map: map, // 対象の地図オブジェクト
-                            position: mapLatLng // 緯度・経度
-                        });
+                        // var marker = new google.maps.Marker({
+                        //     map: map, // 対象の地図オブジェクト
+                        //     position: mapLatLng // 緯度・経度
+                        // });
                     },
                     // 取得失敗した場合
                     function(error) {
+                        console.error("位置情報の取得に失敗しました", error); // コンソールにエラー情報を出力
                         // エラーメッセージを表示
                         switch (error.code) {
                             case 1: // PERMISSION_DENIED
