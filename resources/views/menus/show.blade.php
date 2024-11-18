@@ -33,8 +33,8 @@
                         @csrf
                         @method('DELETE')
                         <button type="button" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold text-xs 
-                        text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 
-                        disabled:opacity-25 transition ease-in-out duration-150 bg-red-700 float-right ml-4" onclick="deleteMenu('{{ $menu->id }}')">
+                            text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 focus:ring ring-gray-300 
+                            disabled:opacity-25 transition ease-in-out duration-150 bg-red-700 float-right ml-4" onclick="deleteMenu('{{ $menu->id }}')">
                             削除
                         </button>
                     </form>
@@ -54,6 +54,16 @@
                         <button type="submit" class="button btn btn-success bg-blue-500 hover:bg-blue-700 text-white font-semibold text-xs py-2 px-4 rounded-md">いいね！を付ける</button>
                     </form>
                     @endif
+                    <div class="text-center">
+                        <span class="badge badge-pill badge-success ml-2 font-semibold text-xs">{{ $menu->like_users_count }}</span>
+                    </div>
+                </div>
+                @else{{-- @auth ログインしていなくても、いいねを表示。クリックするとログイン画面へ--}}
+                <div class="flex items-center justify-end mt-2">
+                    <form action="{{ route('like.store', $menu->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="button btn btn-success bg-blue-500 hover:bg-blue-700 text-white font-semibold text-xs py-2 px-4 rounded-md">いいね！を付ける</button>
+                    </form>
                     <div class="text-center">
                         <span class="badge badge-pill badge-success ml-2 font-semibold text-xs">{{ $menu->like_users_count }}</span>
                     </div>
@@ -104,12 +114,14 @@
             @endforeach
 
             @if(auth()->check())
-            <form method="POST" action="{{ route('comments.store', $menu->id) }}">
+            <form method="POST" action="{{ route('comments.store', $menu->id) }}" class="flex flex-col">
                 @csrf
                 <textarea name="content" class="bg-white w-full  rounded-2xl px-4 mt-4 py-4 shadow-lg hover:shadow-2xl transition duration-500" placeholder="コメントを入力してください"></textarea>
-                <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold 
+                <div class="flex justify-end mt-2">
+                    <button type="submit" class="inline-flex items-center px-4 py-2 bg-gray-800 border border-transparent rounded-md font-semibold 
                 text-xs text-white uppercase tracking-widest hover:bg-gray-700 active:bg-gray-900 focus:outline-none focus:border-gray-900 
-                focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 float-right mr-4 mb-12">コメントする</button>
+                focus:ring ring-gray-300 disabled:opacity-25 transition ease-in-out duration-150 float-right mr-2">コメントする</button>
+                </div>
             </form>
             @else
             <a href="{{ route('login') }}">
