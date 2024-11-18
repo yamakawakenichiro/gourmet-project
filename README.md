@@ -1,9 +1,3 @@
----
-title: 【Laravel / Breeze】実務未経験がポートフォリオとして独学WEBアプリ開発
-tags: Laravel Breeze Docker Tailwind VScode Git
-author: kenichiro yamakawa
-slide: falseで
----
 # 0. はじめに
 Laravel初学者の山川権一郎です！
 ```
@@ -42,37 +36,81 @@ Laravel初学者の山川権一郎です！
 ## 1-3. 開発目的
 1. `PHP/Laravel/Tailwind/Git/Docker/VScode`の学習のため
 2. 外食時に、サクッと簡単にメモできるアプリが欲しかったため
+2. 日常で使用しているメモと写真の中を食事内容で汚したくない
 
 ## 1-4. 使用画面のイメージ
 - ### トップページ
+<div>
+<div class="image-text">PC</div>
 <img src="https://github.com/user-attachments/assets/a0fbdd0d-7a70-4a3c-9dc0-bd9027fac5c2" width=700>
+</div>
+<div>
+<div class="image-text">モバイル</div>
 <img src="https://github.com/user-attachments/assets/92a84edd-ad0f-4663-8114-9aa7894244fd" width=250>
+</div>
 
 - ### メモ詳細ページ
+<div>
+<div class="image-text">PC</div>
 <img src="https://github.com/user-attachments/assets/2357d29a-8c2d-49e0-a6ee-1e651b0d20b4" width=700>
+</div>
+<div>
+<div class="image-text">モバイル</div>
 <img src="https://github.com/user-attachments/assets/ce91cda1-031e-4c4e-9481-cbf9c6c5e769" width=250>
+</div>
 
 - ### メモ作成ページ
+<div>
+<div class="image-text">PC</div>
 <img src="https://github.com/user-attachments/assets/fa409f2c-58bb-4a88-a9ec-01fe417b49a1" width=700>
+</div>
+<div>
+<div class="image-text">モバイル</div>
 <img src="https://github.com/user-attachments/assets/543fe5b4-e27d-4a17-b53b-9447c8b04606" width=250>
+</div>
 
 - ### フォロー中・フォロワーリスト
+<div>
+<div class="image-text">PC</div>
 <img src="https://github.com/user-attachments/assets/c2b8da5d-5298-430d-91e7-fd008f3cd749" width=700>
+</div>
+<div>
+<div class="image-text">モバイル</div>
 <img src="https://github.com/user-attachments/assets/be6b17d3-a8f5-4277-9a64-b9c8f9809332" width=250>
+</div>
 
 - ### マップ
+<div>
+<div class="image-text">PC</div>
 <img src="https://github.com/user-attachments/assets/36c35062-6d69-483e-a619-8cc3e84105f7" width=700>
+</div>
+<div>
+<div class="image-text">モバイル</div>
 <img src="https://github.com/user-attachments/assets/67217671-e9a7-4a6b-9328-9ab220b5fdd7" width=200>
+</div>
 
 - ### 違反報告
+<div>
+<div class="image-text">PC</div>
 <img src="https://github.com/user-attachments/assets/972ba222-edbb-41ee-af61-1406c8433069" width=700>
+</div>
+<div>
+<div class="image-text">モバイル</div>
 <img src="https://github.com/user-attachments/assets/e93b440c-504d-41d9-971e-715ed03e765f" width=200>
+</div>
 
 - ### アカウント情報編集
+<div>
+<div class="image-text">PC</div>
 <img src="https://github.com/user-attachments/assets/ff4abd95-89b0-4387-b4c9-230418480a53" width=700>
+</div>
+<div>
+<div class="image-text">モバイル</div>
 <img src="https://github.com/user-attachments/assets/2d94dc72-a2c0-4265-8a47-ccc0b58451b8" width=250>
+</div>
 
 # 2. 使用技術
+ネイティブアプリは登録費・維持費とストア検査がありすぐに変更を反映できないと思いwebアプリにした
 ## 2-1. ディレクトリ構造
 ```
 【ルートディレクトリ】
@@ -327,7 +365,25 @@ CSSを解析して変換するツールで、多くのプラグインの基盤�
 </ul>
 </details>
 
-## 2-8. その他使用ツール
+## 2-8. API
+- Cloudinary
+- Maps JavaScript API
+- Geolocation API
+- Google Gemini API
+<details><summary>各API詳細</summary>
+<ul>
+<li>Cloudinary:<br>
+Cloudinaryは、画像や動画などのメディア管理を行うためのクラウドベースのサービスで、RESTful APIを提供しています。このAPIを利用することで、開発者はメディアファイルのアップロード、変換、最適化、配信を管理できます。
+<li>Maps JavaScript API:<br>
+Googleが提供するJavaScriptベースのAPIで、ウェブページに地図を埋め込み、表示することができます。このAPIを使用すると、カスタムマーカーの追加、地図のスタイル変更、ルート案内などが可能です。
+<li>Geolocation API:<br>
+一般には、Geolocation APIはウェブブラウザが提供するAPIで、ユーザーの現在地情報を取得するために使用されます。このAPIを使うと、緯度や経度などの位置情報を得ることができます。ただし、公開API名として「Geolocation API」と呼ばれるものが他にも存在し得るので、特定のプロバイダに関連づけて言及する場合は注意が必要です。
+<li>Google Gemini API:<br>
+Google Geminiは、AI技術に関連したGoogleの取り組みの一環で、主に生成AIモデルを指す。特に、文章生成などのタスクを行う
+</ul>
+</details>
+
+## 2-9. その他使用ツール
 - draw.io（画面遷移図・ER図作成）
 - Microsoft Designer（ロゴ製作）
 
@@ -443,7 +499,7 @@ https://github.com/yamakawakenichiro/gourmet-project/issues
 - ER図・AWS構成図をdraw.ioで作成 -->
 
 ## 5-2. Laravel
-- 
+- Blade Components
 
 ## 5-3. CI/CD
 <!-- - config.ymlの書き方
@@ -467,9 +523,15 @@ https://qiita.com/kazumakishimoto/items/6aac32725ebea25acf35 -->
 ### SNS/Chatbot
 <!-- - Chatbotに`ServiceLinkedRole`のインラインポリシー作成 -->
 
+### フロント
+- tailwindcss
 
 # 6. 意識したこと
-## 6-1. セキュリティ
+## 6-1. ソース管理
+- コミットメッセージのルール化
+- 
+
+## 6-. セキュリティ
 - `.env.testing`や`.env.example`にベタ書きしない
 - `.gitignore`に`.env`を必ず記載
 - configでは環境変数で呼び出し
