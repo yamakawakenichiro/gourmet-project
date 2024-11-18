@@ -1,66 +1,552 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+---
+title: 【Laravel / Breeze】実務未経験がポートフォリオとして独学WEBアプリ開発
+tags: Laravel Breeze Docker Tailwind VScode Git
+author: kenichiro yamakawa
+slide: falseで
+---
+# 0. はじめに
+Laravel初学者の山川権一郎です！
+```
+・実務未経験から2カ月独学で、LaravelでのWEBアプリ開発
+・東京でバックエンドエンジニア転職活動中(2024/12)
+```
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 0-1. 全体の流れ
+[1. アプリ概要](#1-アプリ概要)<br>
+[2. 使用技術](#2-使用技術)<br>
+[3. 機能一覧](#3-機能一覧)<br>
+[4. 基本設計](#4-基本設計)<br>
+[5. 難点](#5-難点)<br>
+[6. 意識](#6-意識)<br>
+[7. 課題](#7-課題)<br>
+[8. 作者](#8-作者)<br>
+[9. 教材](#9-教材)<br>
 
-## About Laravel
+# 1. アプリ概要
+|key|value|
+|:--|:--|
+|Name|グルメモ|
+|URL|https://|
+|GitHub|https://github.com/yamakawakenichiro/gourmet-project.git|
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+<img src="https://github.com/user-attachments/assets/a0fbdd0d-7a70-4a3c-9dc0-bd9027fac5c2" width="50%">
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 1-1. コンセプト
+- 食べものの感想を簡単にメモに残せるアプリ
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 1-2. 特徴
+- AIによるメモの自動生成
+- メモの投稿機能・画像アップロード機能
+- 店名・メニュー名の検索機能
 
-## Learning Laravel
+## 1-3. 開発目的
+1. `PHP/Laravel/Tailwind/Git/Docker/VScode`の学習のため
+2. 外食時に、サクッと簡単にメモできるアプリが欲しかったため
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 1-4. 使用画面のイメージ
+- ### トップページ
+<img src="https://github.com/user-attachments/assets/a0fbdd0d-7a70-4a3c-9dc0-bd9027fac5c2" width=700>
+<img src="https://github.com/user-attachments/assets/92a84edd-ad0f-4663-8114-9aa7894244fd" width=250>
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+- ### メモ詳細ページ
+<img src="https://github.com/user-attachments/assets/2357d29a-8c2d-49e0-a6ee-1e651b0d20b4" width=700>
+<img src="https://github.com/user-attachments/assets/ce91cda1-031e-4c4e-9481-cbf9c6c5e769" width=250>
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+- ### メモ作成ページ
+<img src="https://github.com/user-attachments/assets/fa409f2c-58bb-4a88-a9ec-01fe417b49a1" width=700>
+<img src="https://github.com/user-attachments/assets/543fe5b4-e27d-4a17-b53b-9447c8b04606" width=250>
 
-## Laravel Sponsors
+- ### フォロー中・フォロワーリスト
+<img src="https://github.com/user-attachments/assets/c2b8da5d-5298-430d-91e7-fd008f3cd749" width=700>
+<img src="https://github.com/user-attachments/assets/be6b17d3-a8f5-4277-9a64-b9c8f9809332" width=250>
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- ### マップ
+<img src="https://github.com/user-attachments/assets/36c35062-6d69-483e-a619-8cc3e84105f7" width=700>
+<img src="https://github.com/user-attachments/assets/67217671-e9a7-4a6b-9328-9ab220b5fdd7" width=200>
 
-### Premium Partners
+- ### 違反報告
+<img src="https://github.com/user-attachments/assets/972ba222-edbb-41ee-af61-1406c8433069" width=700>
+<img src="https://github.com/user-attachments/assets/e93b440c-504d-41d9-971e-715ed03e765f" width=200>
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- ### アカウント情報編集
+<img src="https://github.com/user-attachments/assets/ff4abd95-89b0-4387-b4c9-230418480a53" width=700>
+<img src="https://github.com/user-attachments/assets/2d94dc72-a2c0-4265-8a47-ccc0b58451b8" width=250>
 
-## Contributing
+# 2. 使用技術
+## 2-1. ディレクトリ構造
+```
+【ルートディレクトリ】
+├─ docker
+│   └─ mysql
+│   └─ nginx
+│   └─ php
+├─ src
+│   └─ 【Laravelのパッケージ】
+└─ compose.yml
+```
+<details><summary>Dockerfile</summary>
+<ul>
+<li>mysql
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```
+FROM mysql:8.4
 
-## Code of Conduct
+ENV TZ='Asia/Tokyo'
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+COPY ./docker/mysql/my.cnf /etc/my.cnf
+```
+<li>nginx
 
-## Security Vulnerabilities
+```
+FROM nginx:1.18-alpine
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+ENV TZ='Asia/Tokyo'
 
-## License
+COPY ./docker/nginx/*.conf /etc/nginx/conf.d/
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+WORKDIR /var/www/html
+```
+<li>php
+
+```
+FROM php:8.2-fpm
+EXPOSE 5173
+
+COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
+
+COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
+
+COPY --from=node:20.16 /usr/local/bin /usr/local/bin
+COPY --from=node:20.16 /usr/local/lib /usr/local/lib
+
+RUN apt-get update \
+    && apt-get -y install \
+    git \
+    zip \
+    unzip \
+    vim \
+    && docker-php-ext-install pdo_mysql bcmath \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git config --global user.name "yamakawakenichiro" \
+    && git config --global user.email "nykenichiro@gmail.com" \
+    && git config --global --add safe.directory /var/www/html 
+
+WORKDIR /var/www/html
+```
+</ul></details>
+<details><summary>compose.yml</summary>
+
+```
+volumes:
+  mysql-volume:
+
+services:
+  # phpの設定
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./docker/php/Dockerfile 
+    volumes: 
+      - ./src:/var/www/html 
+      - ./.ssh:/root/.ssh 
+    environment: 
+      - DB_CONNECTION=mysql
+      - DB_HOST=db 
+      - DB_PORT=3306 
+      - DB_DATABASE=${DB_NAME}
+      - DB_USERNAME=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+    ports:
+      - 5173:5173
+
+  # nginxの設定
+  web:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: ./docker/nginx/Dockerfile
+    ports: 
+      - ${WEB_PORT}:80 
+    depends_on: 
+      - app 
+    volumes:
+      - ./src:/var/www/html
+
+  # mysqlの設定
+  db:
+    container_name: mysql
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
+    ports:
+      - ${DB_PORT}:3306
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      TZ: "Asia/Tokyo"
+    volumes:
+      - mysql-volume:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin
+    depends_on:
+      - db
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOSTS=mysql
+      - PMA_USER=root
+      - PMA_PASSWORD=${DB_ROOT_PASSWORD}
+    ports:
+      - "3001:80"
+```
+</details>
+
+## 2-2. フロントエンド
+- Tailwind CSS 3.1.0
+- HTML/CSS/JavaScript
+
+## 2-3. バックエンド
+- PHP 8.1
+- Laravel 10.10 / Breeze 1.29
+
+## 2-4. DB
+- MySQL 8.4
+- PHPMyAdmin
+
+## 2-5. 開発環境
+- Git/GitHub
+- Docker
+- VScode
+- Linux(WSL2)
+
+## 2-6. 本番環境
+- 
+
+## 2-7. パッケージ管理
+### Composer
+```
+"require": {
+    "php": "^8.1",
+    "cloudinary-labs/cloudinary-laravel": "^2.2",
+    "google-gemini-php/client": "^1.0",
+    "google-gemini-php/laravel": "^1.0",
+    "guzzlehttp/guzzle": "^7.2",
+    "intervention/image": "^3.9",
+    "laravel/framework": "^10.10",
+    "laravel/sanctum": "^3.3",
+    "laravel/socialite": "^5.16",
+    "laravel/tinker": "^2.8"
+},
+"require-dev": {
+    "askdkc/breezejp": "^1.8",
+    "fakerphp/faker": "^1.9.1",
+    "laravel/breeze": "^1.29",
+    "laravel/pint": "^1.0",
+    "laravel/sail": "^1.18",
+    "mockery/mockery": "^1.4.4",
+    "nunomaduro/collision": "^7.0",
+    "phpunit/phpunit": "^10.1",
+    "spatie/laravel-ignition": "^2.0"
+},
+```
+<details><summary>各パッケージの詳細</summary>
+<ul>
+<li>php: "^8.1"<br>
+PHPのバージョン指定で、8.1以上を要求しています。
+<li>cloudinary-labs/cloudinary-laravel: "^2.2"<br>
+CloudinaryとLaravelを統合し、画像や動画などのメディアを管理するためのパッケージです。
+<li>google-gemini-php/client & google-gemini-php/laravel: "^1.0"<br>
+これらはGoogle Gemini APIと統合するためのライブラリで、APIクライアントとLaravelとの統合を提供します。
+<li>guzzlehttp/guzzle: "^7.2"<br>
+PHP用のHTTPクライアントで、HTTPリクエストを簡単に送信するためのライブラリです。
+<li>intervention/image: "^3.9"<br>
+画像の操作（リサイズ、フィルタ、変換など）を行うためのPHPライブラリ。
+<li>laravel/framework: "^10.10"<br>
+Laravelフレームワークそのもので、PHPのための人気の高いウェブアプリケーションフレームワークです。
+<li>laravel/sanctum: "^3.3"<br>
+Laravelアプリケーションにシンプルなトークン認証（APIトークン認証）を提供します。
+<li>laravel/socialite: "^5.16"<br>
+OAuthプロバイダ（Google、Facebook、Twitterなど）による認証を簡単に実装するためのパッケージです。
+<li>laravel/tinker: "^2.8"<br>
+Laravelでのインタラクティブなコマンドラインインターフェース（CLI）を提供するツールで、クイックなテストやデバッグに便利です。
+<li>askdkc/breezejp: "^1.8"<br>
+Laravel Breezeの日本語言語サポートを提供します。
+<li>fakerphp/faker: "^1.9.1"<br>
+テストデータを生成するためのライブラリ。名前や住所、テキストなどをランダムに生成します。
+<li>laravel/breeze: "^1.29"<br>
+Laravelアプリケーションにシンプルな認証機能を追加するためのスターターキット。
+<li>laravel/pint: "^1.0"<br>
+PHPファイルのコーディングスタイルを自動で整えるためのCLIツールです。
+<li>laravel/sail: "^1.18"<br>
+Dockerを使用してLaravel開発環境を簡単にセットアップするための軽量なコマンドラインインターフェース。
+<li>mockery/mockery: "^1.4.4"<br>
+テストにおけるモックオブジェクトを簡単に作成するためのライブラリです。
+<li>nunomaduro/collision: "^7.0"<br>
+コマンドラインアプリケーションのエラーハンドリングを改善するためのライブラリ。
+<li>phpunit/phpunit: "^10.1"<br>
+PHP用の単体テストフレームワークで、テストを書き、実行するための標準的なツール。
+<li>spatie/laravel-ignition: "^2.0"<br>
+Laravelアプリケーションのエラーレポートを整理し、詳細なデバッグ情報を提供するツールです。
+</ul>
+</details>
+
+### npm
+```
+"@tailwindcss/forms": "^0.5.2",
+"alpinejs": "^3.4.2",
+"autoprefixer": "^10.4.2",
+"axios": "^1.6.4",
+"laravel-vite-plugin": "^1.0.0",
+"postcss": "^8.4.31",
+"tailwindcss": "^3.1.0",
+"vite": "^5.0.0"
+```
+<details><summary>各パッケージの詳細</summary>
+<ul>
+<li>@tailwindcss/forms: "^0.5.2"<br>
+Tailwind CSSの公式プラグインの一つで、フォーム要素（入力フィールド、チェックボックス、ラジオボタンなど）のスタイルを簡素化し、デフォルトのブラウザスタイルをカスタマイズしやすくします。フォームの外観をより統一感のあるデザインにするために利用されます。
+<li>alpinejs: "^3.4.2"<br>
+軽量で直感的なJavaScriptフレームワークで、簡単なインタラクティブなUIを構築するために利用されます。Vue.jsやReactのような複雑なフレームワークを使わずに、HTMLマークアップに直接組み込むことができます。（未使用）
+<li>autoprefixer: "^10.4.2"<br>
+PostCSS用プラグインで、CSSにベンダープレフィックス（-webkit-、-moz-など）を自動的に追加します。CSSの互換性を向上させるため、異なるブラウザ間でスタイルが正しく表示されるようにします。
+<li>axios: "^1.6.4"<br>
+ブラウザやNode.js用のHTTPクライアントで、プロミスベースのAPIを提供しています。APIリクエスト（GET、POSTなど）を簡単に実行でき、レスポンスの処理などを行う際に利用されます。(マップ表示用)
+<li>laravel-vite-plugin: "^1.0.0"<br>
+LaravelフレームワークでViteを利用するためのプラグインです。Viteはフロントエンド資産のビルドツールであり、このプラグインはLaravelプロジェクトでViteを統合しやすくし、開発体験を向上させます。
+<li>postcss: "^8.4.31"<br>
+CSSを解析して変換するツールで、多くのプラグインの基盤として利用されます。PostCSSを使用すると、CSSファイルを構文解析してツリー構造にし、その後様々な変形や最適化を行うことができます。
+<li>tailwindcss: "^3.1.0"<br>
+低レベルのユーティリティクラスを使用して、迅速にスタイルを適用できるCSSフレームワークです。レスポンシブデザインやカスタムUIを容易に構築することを可能にします。（ページネーションはbootstrap）
+<li>vite: "^5.0.0"<br>
+フロントエンド資産のビルドツール兼開発サーバーで、特にVue.jsやReactなどのモダンなフロントエンドフレームワークと組み合わせて使われます。高速なHMR（ホットモジュールリプレイスメント）を提供し、開発体験を向上させます。
+</ul>
+</details>
+
+## 2-8. その他使用ツール
+- draw.io（画面遷移図・ER図作成）
+- Microsoft Designer（ロゴ製作）
+
+# 3. 機能一覧
+## 3-1. メイン機能
+- メモ投稿機能(CRUD)
+- AIによるメモ自動生成機能(Gemini)
+- 画像アップロード機能(Cloudinary)
+- ページネーション機能
+- コメント機能
+- いいね機能
+- フォロー機能
+- キーワード検索機能(店名・メニュー名)
+- マップ表示機能
+- 通報機能・報告メール転送機能
+
+## 3-2. 認証機能
+- 会員登録/ログイン/ログアウト
+- Google会員登録/ログイン(GCP OAuth)
+- プロフィール情報更新（名前、メールアドレス）
+- パスワード更新
+- アカウント退会
+
+## 3-3. 非機能
+- レスポンシブWEBデザイン
+
+## 3-4. インフラ
+- 
+
+# 4. 基本設計
+<!-- ## 4-1. インセプションデッキ
+- ※作成中 -->
+
+## 4-2. 画面遷移図
+<img src="https://github.com/user-attachments/assets/904622d1-31b6-41c4-b34d-268322bf680c" width="1100">
+
+## 4-3. 開発環境
+- 開発環境：`Docker/compose`
+- バージョン管理：`GitHub`
+- 開発ツール：`VScode`
+  <details><summary>VScodeプラグイン</summary>
+  <ul>
+  <li>Amazon Q
+  <li>Auto Complete Tag
+  <li>Code Spell Checker
+  <li>CSS Peek
+  <li>Docker
+  <li>Japanese Language Pack for Visual Studio Code
+  <li>Live Server
+  <li>PHP Intelephense
+  <li>Prettier - Code formatter
+  <li>WSL
+  </ul>
+  </details>
+
+|key|value|
+|:--|:--|
+|php|app|
+|nginx|web|
+|mysql|db|
+|phpmyadmin|db管理|
+
+## 4-4. 本番環境
+- 
+
+<!-- ![aws](https://user-images.githubusercontent.com/68370181/178103075-eec5508a-4d29-409c-84f4-3f687fa9cd5d.png) -->
+
+|key|value|
+|:--|:--|
+<!-- |CloudFormation|環境構築|
+|VPC|サブネット(EC2 / RDS)|
+|EC2|nginx / php-fpm(public subnet 1a,1c)|
+|RDS|MySQL(private subnet 1a,1c)|
+|S3|画像用ストレージ|
+|Route53|DNSレコード管理|
+|ALB|ロードバランサー|
+|ACM|SSL証明書取得(HTTPS化)|
+|SNS|Slackデプロイ通知|
+|Chatbot|Slackデプロイ通知|
+|CircleCI|自動デプロイ|
+|CodeDeploy|自動デプロイ|
+|IAM|権限付与|
+|CloudWatch|料金確認| -->
+
+## 4-5. ER図
+<img src="https://github.com/user-attachments/assets/d04afee8-4d10-489b-a532-9ef06c4ec098" width="1100">
+
+## 4-6. テーブル定義書
+| tables | desc |
+|----|----|
+| users | ユーザー情報 |
+| menus | メモ情報 |
+| comments | コメント情報 |
+| likes | いいね情報 |
+| follows | フォロー中/フォロワーの情報 |
+| categories | 違反のカテゴリーの情報 |
+| reports | 違反の報告情報 |
+
+## 4-7. issue
+https://github.com/yamakawakenichiro/gourmet-project/issues
+
+## 4-8. Git-Flow
+<!-- https://qiita.com/mint__/items/bfc58589b5b1e0a1856a -->
+
+## 4-9. 開発期間
+- 要件定義から約2カ月間<br>
+![image.png](https://github.com/user-attachments/assets/00ebdac6-e200-4885-a93f-b612ebcc46b7)
+
+
+# 5. 困難だったこと
+## 5-1. 基本設計
+<!-- - 機能一覧から画面遷移図/テーブル定義書/ER図を作成
+- ER図・AWS構成図をdraw.ioで作成 -->
+
+## 5-2. Laravel
+- 
+
+## 5-3. CI/CD
+<!-- - config.ymlの書き方
+
+https://qiita.com/kazumakishimoto/items/6aac32725ebea25acf35 -->
+
+## 5-4. AWS
+<!-- ### EC2
+- php-fpmやNginxのファイル設定
+- Linuxユーザー権限
+- EC2上のLaravelやNginxのエラーログ理解 -->
+
+### ALB/ACM
+<!-- - Laravel側のHTTPS化設定 -->
+
+### CircleCI/CodeDeploy
+<!-- - サブディレクトリのデプロイ設定(config.ymlのworking_directory設定)
+- permissionエラー(.circleciディレクトリの権限)
+- ヘルスチェックエラー(ターゲットグループの設定) -->
+
+### SNS/Chatbot
+<!-- - Chatbotに`ServiceLinkedRole`のインラインポリシー作成 -->
+
+
+# 6. 意識したこと
+## 6-1. セキュリティ
+- `.env.testing`や`.env.example`にベタ書きしない
+- `.gitignore`に`.env`を必ず記載
+- configでは環境変数で呼び出し
+
+```php:config/services.php
+<?php
+
+return [
+
+    //略
+
+    'ses' => [
+        'key' => env('AWS_ACCESS_KEY_ID'),
+        'secret' => env('AWS_SECRET_ACCESS_KEY'),
+        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
+    ],
+
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('APP_URL') . '/login/google/callback',
+    ],
+];
+```
+
+# 7. 課題
+- 位置情報から店名自動入力
+- コメント削除機能
+- SNSシェア機能
+- 英語学習（情報収集のため）
+
+# 8. 作者
+|key|value|
+|---|-----|
+|名前|山川権一郎(やまかわけんいちろう)|
+|住所|東京都|
+|ポートフォリオ|[**グルメモ**](https://)|
+|GitHub|[@yamakawakenichiro](https://github.com/yamakawakenichiro)|
+
+# 9. 教材
+## 9-1. 基本設計
+
+## 9-2. Git
+https://amzn.asia/d/5Hd5Vh7
+
+https://qiita.com/konatsu_p/items/dfe199ebe3a7d2010b3e
+
+## 9-3. PHP
+https://amzn.asia/d/4NcQRM3
+
+https://newmonz.jp/lesson/php-basic/chapter-1
+
+## 9-4. JavaScript
+
+## 9-5. SQL
+
+## 9-6. CS
+
+## 9-7. Linux
+
+## 9-8. Laravel
+https://amzn.asia/d/f7BSQvD
+
+https://newmonz.jp/lesson/laravel-basic/chapter-1
+
+## 9-9. Docker
+https://amzn.asia/d/eII2iIC
+
+## 9-10. AWS
+
+## 9-11. CircleCI
+
+## 9-12. 基本設計
+
+## 9-13. 参考ポートフォリオ
+https://qiita.com/kazumakishimoto/items/2ac669119c968e30ae37
+
+https://qiita.com/_reika0807/items/f8d7d7a4a1a3345fb2e4
+
+https://members.createmore-prj.com/

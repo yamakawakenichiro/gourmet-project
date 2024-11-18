@@ -45,11 +45,11 @@
                             document.getElementById("map"), // マップを表示する要素
                             mapOptions // マップオプション
                         );
-                        //　マップにマーカーを表示する
-                        // var marker = new google.maps.Marker({
-                        //     map: map, // 対象の地図オブジェクト
-                        //     position: mapLatLng // 緯度・経度
-                        // });
+                        // マップにマーカーを表示する
+                        var marker = new google.maps.Marker({
+                            map: map, // 対象の地図オブジェクト
+                            position: mapLatLng // 緯度・経度
+                        });
                     },
                     // 取得失敗した場合
                     function(error) {
