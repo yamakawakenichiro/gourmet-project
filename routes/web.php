@@ -66,6 +66,7 @@ Route::middleware('auth')->group(function () {
 
     // コメント
     Route::post('/menus/{menu}/comments', [CommentController::class, 'store'])->name('comments.store');
+    Route::delete('/menus/{menu}/comments/{comment}', [CommentController::class, 'delete'])->name('comments.delete');
 
     // Gemini
     Route::post('/gemini', [GeminiController::class, 'post'])->name('gemini.post');
