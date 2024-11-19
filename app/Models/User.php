@@ -10,7 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use PgSql\Lob;
 
 class User extends Authenticatable
-{
+{ //個人情報保護法やデータの永続的削除が必要な場合、ソフトデリートではなく、データベースから完全に削除（ハードデリート）にした
     use HasApiTokens, HasFactory, Notifiable;
 
     /**

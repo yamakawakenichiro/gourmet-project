@@ -26,8 +26,12 @@
                 <p class="name__error" style="color:red">{{ $errors->first('menu.price') }}</p>
             </div>
             <div class="w-full flex flex-col">
-                <label for="count" class="font-semibold leading-none mt-4">回数（回）</label>
-                <input type="number" id="count" name="menu[count]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" value="{{ $menu->count }}">
+                <label for="count" class="font-semibold leading-none mt-4">回数（回）※±１のみ変更可能</label>
+                @php
+                $minCount = $menu->count - 1;
+                $maxCount = $menu->count + 1;
+                @endphp
+                <input type="number" id="count" name="menu[count]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" value="{{ $menu->count }}" min="{{ $minCount }}" max="{{ $maxCount }}" step="1">
                 <p class="name__error" style="color:red">{{ $errors->first('menu.count') }}</p>
             </div>
             <div class="w-full flex flex-col">
