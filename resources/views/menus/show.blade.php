@@ -110,6 +110,17 @@
                         {{ $comment->user->name }} ({{ $comment->created_at->diffForHumans() }})
                     </p>
                 </div>
+                @if($menu->user_id === auth()->id())
+                <div class="text-sm flex flex-row-reverse">
+                    <form action="{{ route('comments.delete', ['menu' => $menu->id, 'comment' => $comment->id]) }}" id="form_{{ $comment->id }}" method="post">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" onclick="deleteComment('{{ $comment->id }}')" style="background: none; border: none; padding: 0; cursor: pointer;">
+                            <img src="{{ asset('storage/images/trash.png') }}" width="16" height="16">
+                        </button>
+                    </form>
+                </div>
+                @endif
             </div>
             @endforeach
 
@@ -136,6 +147,14 @@
 
     <script>
         function deleteMenu(id) {
+            'use strict'
+
+            if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
+                document.getElementById(`form_${id}`).submit();
+            }
+        }
+
+        function deleteComment(id) {
             'use strict'
 
             if (confirm('削除すると復元できません。\n本当に削除しますか？')) {
