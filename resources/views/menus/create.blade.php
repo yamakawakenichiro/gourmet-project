@@ -31,7 +31,7 @@
                 <p class="name__error" style="color:red">{{ $errors->first('menu.price') }}</p>
             </div>
             <div class="w-full flex flex-col">
-                <label for="count" class="font-semibold leading-none mt-4">回数（回）※初回は０か１</label>
+                <label for="count" class="font-semibold leading-none mt-4">回数（回）※新規作成時は０か１</label>
                 <input type="number" id="count" name="menu[count]" class="w-auto py-2 placeholder-gray-300 border border-gray-300 rounded-md" value="{{ old('menu.count', 1) }}" min="0" max="1" step="1">
                 <p class="name__error" style="color:red">{{ $errors->first('menu.count') }}</p>
             </div>
