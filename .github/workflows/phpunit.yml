@@ -10,6 +10,8 @@ jobs:
         working-directory: ./src
     steps:
       - uses: actions/checkout@v2
+      - name: Verify directory structure
+        run: ls -al
       - name: docker-compose up
         run: |
           # docker-compose build
