@@ -1,5 +1,5 @@
 # 0. はじめに
-Laravel初学者の山川権一郎です！
+Laravel初学者の山川権一郎です。
 ```
 ・実務未経験から2カ月独学で、LaravelでのWEBアプリ開発
 ・東京でバックエンドエンジニア転職活動中(2024/12)
@@ -36,7 +36,7 @@ Laravel初学者の山川権一郎です！
 ## 1-3. 開発目的
 1. `PHP/Laravel/Tailwind/Git/Docker/VScode`の学習のため
 2. 外食時に、サクッと簡単にメモできるアプリが欲しかったため
-2. 日常で使用しているメモと写真の中を食事内容で汚したくない
+2. 日常で使用しているメモと写真の中を食事内容で汚したくないため
 
 ## 1-4. 使用画面のイメージ
 - ### トップページ
@@ -124,127 +124,6 @@ Laravel初学者の山川権一郎です！
 ├─ .gitignore
 └─ compose.yml
 ```
-<details><summary>Dockerfile</summary>
-<ul>
-<li>mysql
-
-```
-FROM mysql:8.4
-
-ENV TZ='Asia/Tokyo'
-
-COPY ./docker/mysql/my.cnf /etc/my.cnf
-```
-<li>nginx
-
-```
-FROM nginx:1.18-alpine
-
-ENV TZ='Asia/Tokyo'
-
-COPY ./docker/nginx/*.conf /etc/nginx/conf.d/
-
-WORKDIR /var/www/html
-```
-<li>php
-
-```
-FROM php:8.2-fpm
-EXPOSE 5173
-
-COPY ./docker/php/php.ini /usr/local/etc/php/php.ini
-
-COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
-
-COPY --from=node:20.16 /usr/local/bin /usr/local/bin
-COPY --from=node:20.16 /usr/local/lib /usr/local/lib
-
-RUN apt-get update \
-    && apt-get -y install \
-    git \
-    zip \
-    unzip \
-    vim \
-    && docker-php-ext-install pdo_mysql bcmath \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-RUN git config --global user.name "yamakawakenichiro" \
-    && git config --global user.email "nykenichiro@gmail.com" \
-    && git config --global --add safe.directory /var/www/html 
-
-WORKDIR /var/www/html
-```
-</ul></details>
-<details><summary>compose.yml</summary>
-
-```
-volumes:
-  mysql-volume:
-
-services:
-  # phpの設定
-  app:
-    container_name: app
-    build:
-      context: .
-      dockerfile: ./docker/php/Dockerfile 
-    volumes: 
-      - ./src:/var/www/html 
-      - ./.ssh:/root/.ssh 
-    environment: 
-      - DB_CONNECTION=mysql
-      - DB_HOST=db 
-      - DB_PORT=3306 
-      - DB_DATABASE=${DB_NAME}
-      - DB_USERNAME=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-    ports:
-      - 5173:5173
-
-  # nginxの設定
-  web:
-    container_name: nginx
-    build:
-      context: .
-      dockerfile: ./docker/nginx/Dockerfile
-    ports: 
-      - ${WEB_PORT}:80 
-    depends_on: 
-      - app 
-    volumes:
-      - ./src:/var/www/html
-
-  # mysqlの設定
-  db:
-    container_name: mysql
-    build:
-      context: .
-      dockerfile: ./docker/mysql/Dockerfile
-    ports:
-      - ${DB_PORT}:3306
-    environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
-      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
-      TZ: "Asia/Tokyo"
-    volumes:
-      - mysql-volume:/var/lib/mysql
-
-  phpmyadmin:
-    image: phpmyadmin
-    depends_on:
-      - db
-    environment:
-      - PMA_ARBITRARY=1
-      - PMA_HOSTS=mysql
-      - PMA_USER=root
-      - PMA_PASSWORD=${DB_ROOT_PASSWORD}
-    ports:
-      - "3001:80"
-```
-</details>
 
 ## 2-2. フロントエンド
 - Tailwind CSS 3.1.0
@@ -270,99 +149,93 @@ services:
 ## 2-7. パッケージ管理
 ### Composer
 ```
-"require": {
-    "php": "^8.1",
-    "cloudinary-labs/cloudinary-laravel": "^2.2",
-    "google-gemini-php/client": "^1.0",
-    "google-gemini-php/laravel": "^1.0",
-    "guzzlehttp/guzzle": "^7.2",
-    "intervention/image": "^3.9",
-    "laravel/framework": "^10.10",
-    "laravel/sanctum": "^3.3",
-    "laravel/socialite": "^5.16",
-    "laravel/tinker": "^2.8"
-},
-"require-dev": {
-    "askdkc/breezejp": "^1.8",
-    "fakerphp/faker": "^1.9.1",
-    "laravel/breeze": "^1.29",
-    "laravel/pint": "^1.0",
-    "laravel/sail": "^1.18",
-    "mockery/mockery": "^1.4.4",
-    "nunomaduro/collision": "^7.0",
-    "phpunit/phpunit": "^10.1",
-    "spatie/laravel-ignition": "^2.0"
-},
+php
+cloudinary-labs/cloudinary-laravel
+google-gemini-php/client
+google-gemini-php/laravel
+guzzlehttp/guzzle
+intervention/image
+laravel/framework
+laravel/sanctum
+laravel/socialite
+laravel/tinker
+askdkc/breezejp
+fakerphp/faker
+laravel/breeze
+laravel/pint
+laravel/sail
+mockery/mockery
+nunomaduro/collision
+phpunit/phpunit
+spatie/laravel-ignition"
 ```
 <details><summary>各パッケージの詳細</summary>
 <ul>
-<li>php: "^8.1"<br>
-PHPのバージョン指定で、8.1以上を要求しています。
-<li>cloudinary-labs/cloudinary-laravel: "^2.2"<br>
+<li>cloudinary-labs/cloudinary-laravel<br>
 CloudinaryとLaravelを統合し、画像や動画などのメディアを管理するためのパッケージです。
-<li>google-gemini-php/client & google-gemini-php/laravel: "^1.0"<br>
+<li>google-gemini-php/client & google-gemini-php/laravel<br>
 これらはGoogle Gemini APIと統合するためのライブラリで、APIクライアントとLaravelとの統合を提供します。
-<li>guzzlehttp/guzzle: "^7.2"<br>
+<li>guzzlehttp/guzzle<br>
 PHP用のHTTPクライアントで、HTTPリクエストを簡単に送信するためのライブラリです。
-<li>intervention/image: "^3.9"<br>
+<li>intervention/image<br>
 画像の操作（リサイズ、フィルタ、変換など）を行うためのPHPライブラリ。
-<li>laravel/framework: "^10.10"<br>
+<li>laravel/framework<br>
 Laravelフレームワークそのもので、PHPのための人気の高いウェブアプリケーションフレームワークです。
-<li>laravel/sanctum: "^3.3"<br>
+<li>laravel/sanctum<br>
 Laravelアプリケーションにシンプルなトークン認証（APIトークン認証）を提供します。
-<li>laravel/socialite: "^5.16"<br>
+<li>laravel/socialite<br>
 OAuthプロバイダ（Google、Facebook、Twitterなど）による認証を簡単に実装するためのパッケージです。
-<li>laravel/tinker: "^2.8"<br>
+<li>laravel/tinker<br>
 Laravelでのインタラクティブなコマンドラインインターフェース（CLI）を提供するツールで、クイックなテストやデバッグに便利です。
-<li>askdkc/breezejp: "^1.8"<br>
+<li>askdkc/breezejp<br>
 Laravel Breezeの日本語言語サポートを提供します。
-<li>fakerphp/faker: "^1.9.1"<br>
+<li>fakerphp/faker<br>
 テストデータを生成するためのライブラリ。名前や住所、テキストなどをランダムに生成します。
-<li>laravel/breeze: "^1.29"<br>
+<li>laravel/breeze<br>
 Laravelアプリケーションにシンプルな認証機能を追加するためのスターターキット。
-<li>laravel/pint: "^1.0"<br>
+<li>laravel/pint<br>
 PHPファイルのコーディングスタイルを自動で整えるためのCLIツールです。
-<li>laravel/sail: "^1.18"<br>
+<li>laravel/sail<br>
 Dockerを使用してLaravel開発環境を簡単にセットアップするための軽量なコマンドラインインターフェース。
-<li>mockery/mockery: "^1.4.4"<br>
+<li>mockery/mockery<br>
 テストにおけるモックオブジェクトを簡単に作成するためのライブラリです。
-<li>nunomaduro/collision: "^7.0"<br>
+<li>nunomaduro/collision<br>
 コマンドラインアプリケーションのエラーハンドリングを改善するためのライブラリ。
-<li>phpunit/phpunit: "^10.1"<br>
+<li>phpunit/phpunit<br>
 PHP用の単体テストフレームワークで、テストを書き、実行するための標準的なツール。
-<li>spatie/laravel-ignition: "^2.0"<br>
+<li>spatie/laravel-ignition<br>
 Laravelアプリケーションのエラーレポートを整理し、詳細なデバッグ情報を提供するツールです。
 </ul>
 </details>
 
 ### npm
 ```
-"@tailwindcss/forms": "^0.5.2",
-"alpinejs": "^3.4.2",
-"autoprefixer": "^10.4.2",
-"axios": "^1.6.4",
-"laravel-vite-plugin": "^1.0.0",
-"postcss": "^8.4.31",
-"tailwindcss": "^3.1.0",
-"vite": "^5.0.0"
+@tailwindcss/forms
+alpinejs
+autoprefixer
+axios
+laravel-vite-plugin
+postcss
+tailwindcss
+vite
 ```
 <details><summary>各パッケージの詳細</summary>
 <ul>
-<li>@tailwindcss/forms: "^0.5.2"<br>
+<li>@tailwindcss/forms<br>
 Tailwind CSSの公式プラグインの一つで、フォーム要素（入力フィールド、チェックボックス、ラジオボタンなど）のスタイルを簡素化し、デフォルトのブラウザスタイルをカスタマイズしやすくします。フォームの外観をより統一感のあるデザインにするために利用されます。
-<li>alpinejs: "^3.4.2"<br>
+<li>alpinejs<br>
 軽量で直感的なJavaScriptフレームワークで、簡単なインタラクティブなUIを構築するために利用されます。Vue.jsやReactのような複雑なフレームワークを使わずに、HTMLマークアップに直接組み込むことができます。（未使用）
-<li>autoprefixer: "^10.4.2"<br>
+<li>autoprefixer<br>
 PostCSS用プラグインで、CSSにベンダープレフィックス（-webkit-、-moz-など）を自動的に追加します。CSSの互換性を向上させるため、異なるブラウザ間でスタイルが正しく表示されるようにします。
-<li>axios: "^1.6.4"<br>
+<li>axios<br>
 ブラウザやNode.js用のHTTPクライアントで、プロミスベースのAPIを提供しています。APIリクエスト（GET、POSTなど）を簡単に実行でき、レスポンスの処理などを行う際に利用されます。(マップ表示用)
-<li>laravel-vite-plugin: "^1.0.0"<br>
+<li>laravel-vite-plugin<br>
 LaravelフレームワークでViteを利用するためのプラグインです。Viteはフロントエンド資産のビルドツールであり、このプラグインはLaravelプロジェクトでViteを統合しやすくし、開発体験を向上させます。
-<li>postcss: "^8.4.31"<br>
+<li>postcss<br>
 CSSを解析して変換するツールで、多くのプラグインの基盤として利用されます。PostCSSを使用すると、CSSファイルを構文解析してツリー構造にし、その後様々な変形や最適化を行うことができます。
-<li>tailwindcss: "^3.1.0"<br>
+<li>tailwindcss<br>
 低レベルのユーティリティクラスを使用して、迅速にスタイルを適用できるCSSフレームワークです。レスポンシブデザインやカスタムUIを容易に構築することを可能にします。（ページネーションはbootstrap）
-<li>vite: "^5.0.0"<br>
+<li>vite<br>
 フロントエンド資産のビルドツール兼開発サーバーで、特にVue.jsやReactなどのモダンなフロントエンドフレームワークと組み合わせて使われます。高速なHMR（ホットモジュールリプレイスメント）を提供し、開発体験を向上させます。
 </ul>
 </details>
@@ -420,7 +293,7 @@ Google Geminiは、AI技術に関連したGoogleの取り組みの一環で、�
 - ※作成中 -->
 
 ## 4-2. 画面遷移図
-<img src="https://github.com/user-attachments/assets/904622d1-31b6-41c4-b34d-268322bf680c" width="1100">
+https://drive.google.com/file/d/10Zck4wBCw5BVnt5IF9lE4vdTfUwd1JH-/view?usp=sharing
 
 ## 4-3. 開発環境
 - 開発環境：`Docker/compose`
@@ -471,18 +344,10 @@ Google Geminiは、AI技術に関連したGoogleの取り組みの一環で、�
 |CloudWatch|料金確認| -->
 
 ## 4-5. ER図
-<img src="https://github.com/user-attachments/assets/d04afee8-4d10-489b-a532-9ef06c4ec098" width="1100">
+https://drive.google.com/file/d/10Zck4wBCw5BVnt5IF9lE4vdTfUwd1JH-/view?usp=sharing
 
 ## 4-6. テーブル定義書
-| tables | desc |
-|----|----|
-| users | ユーザー情報 |
-| menus | メモ情報 |
-| comments | コメント情報 |
-| likes | いいね情報 |
-| follows | フォロー中/フォロワーの情報 |
-| categories | 違反のカテゴリーの情報 |
-| reports | 違反の報告情報 |
+https://drive.google.com/file/d/10Zck4wBCw5BVnt5IF9lE4vdTfUwd1JH-/view?usp=sharing
 
 ## 4-7. issue
 https://github.com/yamakawakenichiro/gourmet-project/issues
@@ -534,30 +399,6 @@ https://qiita.com/kazumakishimoto/items/6aac32725ebea25acf35 -->
 - 
 
 ## 6-. セキュリティ
-- `.env.testing`や`.env.example`にベタ書きしない
-- `.gitignore`に`.env`を必ず記載
-- configでは環境変数で呼び出し
-
-```php:config/services.php
-<?php
-
-return [
-
-    //略
-
-    'ses' => [
-        'key' => env('AWS_ACCESS_KEY_ID'),
-        'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
-    ],
-
-    'google' => [
-        'client_id' => env('GOOGLE_CLIENT_ID'),
-        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => env('APP_URL') . '/login/google/callback',
-    ],
-];
-```
 
 # 7. 課題
 - 位置情報から店名自動入力
