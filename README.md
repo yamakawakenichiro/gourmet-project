@@ -268,7 +268,7 @@ Google Geminiは、AI技術に関連したGoogleの取り組みの一環で、�
 - AIによるメモ自動生成機能(Gemini)
 - 画像アップロード機能(Cloudinary)
 - ページネーション機能
-- コメント機能
+- コメント機能（投稿・削除）
 - いいね機能
 - フォロー機能
 - キーワード検索機能(店名・メニュー名)
@@ -289,8 +289,8 @@ Google Geminiは、AI技術に関連したGoogleの取り組みの一環で、�
 - 
 
 # 4. 基本設計
-<!-- ## 4-1. インセプションデッキ
-- ※作成中 -->
+## 4-1. ワイヤーフレーム
+https://drive.google.com/file/d/10Zck4wBCw5BVnt5IF9lE4vdTfUwd1JH-/view?usp=sharing
 
 ## 4-2. 画面遷移図
 https://drive.google.com/file/d/10Zck4wBCw5BVnt5IF9lE4vdTfUwd1JH-/view?usp=sharing
