@@ -18,11 +18,18 @@
         </include>
     </source>
     <php>
+        <!-- testingがないから.envのlocalが動いているっぽい -->
         <env name="APP_ENV" value="testing"/>
+        <env name="DB_CONNECTION" value="mysql"/>
+        <!-- DB_HOSTが一番重要っぽい -->
+        <env name="DB_HOST" value="db-testing"/>
+        <env name="DB_TESTING_PORT" value="3307"/>
+        <env name="DB_DATABASE" value="gourmet"/>
+        <env name="DB_USERNAME" value="root"/>
+        <env name="DB_PASSWORD" value="password"/>
+        
         <env name="BCRYPT_ROUNDS" value="4"/>
         <env name="CACHE_DRIVER" value="array"/>
-        <!-- <env name="DB_CONNECTION" value="sqlite"/> -->
-        <!-- <env name="DB_DATABASE" value=":memory:"/> -->
         <env name="MAIL_MAILER" value="array"/>
         <env name="PULSE_ENABLED" value="false"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
@@ -30,3 +37,20 @@
         <env name="TELESCOPE_ENABLED" value="false"/>
     </php>
 </phpunit>
+
+<!--
+まずはテストを通すことを第一に目指すのがテスト駆動開発の流儀です。
+目の前の目標は完璧な解を出すことではなく、テストを通すことだ。代わりに犠牲になった正しさや美しさは、後から追求することにしよう。
+
+何から何まで全てのコードに対してテストを書くというのは、時間や予算も有限であり、現実的ではありません。特に自動テストでは、大事な部分や壊れやすい部分
+
+Laravel Dusk は、本書では取り扱っていませんが、Laravel Dusk では実際のブラウザを使ったテストが行えます。
+
+Pest とは、Laravel 開発チームの一人の Nuno Maduro 氏により開発されている PHP テスト用フレームワークです。
+
+フィーチャーテストでは、複数のクラスが連動するような処理の実行後の状態を確認します。
+ウェブサービスでは、一般的に、Controller を対象とし、HTTP リクエストを入力値、レスポンスを出力値として検査します。
+
+HTTP レスポンスに絡む内容は、$response-> となり、それ以外は、$this-> となると捉えて下さい。
+レスポンス絡みとは、HTTP の出力（HTML の表示やヘッダー）などに関する内容です。
+-->

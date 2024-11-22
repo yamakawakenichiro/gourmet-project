@@ -120,6 +120,8 @@ Laravel初学者の山川権一郎です！
 │   └─ php
 ├─ src
 │   └─ 【Laravelのパッケージ】
+├─ .env
+├─ .gitignore
 └─ compose.yml
 ```
 <details><summary>Dockerfile</summary>
@@ -559,7 +561,6 @@ return [
 
 # 7. 課題
 - 位置情報から店名自動入力
-- コメント削除機能
 - SNSシェア機能
 - 英語学習（情報収集のため）
 

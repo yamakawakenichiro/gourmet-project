@@ -1,0 +1,1 @@
+<link rel="icon" href="{{ asset('storage/images/hamburger_1.ico') }}">
