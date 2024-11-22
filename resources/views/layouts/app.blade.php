@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
-    <link rel="icon" href="{{ asset('storage/images/hamburger_1.ico') }}">
+    <x-application-icon />
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
