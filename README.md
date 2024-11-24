@@ -20,23 +20,24 @@ Laravel初学者の山川権一郎です。
 |key|value|
 |:--|:--|
 |Name|グルメモ|
-|URL|https://|
+|URL|https://gour-memo.com|
 |GitHub|https://github.com/yamakawakenichiro/gourmet-project.git|
 
 <img src="https://github.com/user-attachments/assets/a0fbdd0d-7a70-4a3c-9dc0-bd9027fac5c2" width="50%">
 
 ## 1-1. コンセプト
-- 食べものの感想を簡単にメモに残せるアプリ
+- 飲食店の食後の感想を簡単にメモに残せるアプリ
 
 ## 1-2. 特徴
 - AIによるメモの自動生成
 - メモの投稿機能・画像アップロード機能
+- マップ表示機能
 - 店名・メニュー名の検索機能
 
 ## 1-3. 開発目的
-1. `PHP/Laravel/Tailwind/Git/Docker/VScode`の学習のため
+1. `PHP/Laravel/TailwindCSS/Git/Docker/VScode`の学習のため
 2. 外食時に、サクッと簡単にメモできるアプリが欲しかったため
-2. 日常で使用しているメモと写真の中を食事内容で汚したくないため
+2. 日常で使用しているメモと写真の中に食事内容を混ぜたくなかったため
 
 ## 1-4. 使用画面のイメージ
 - ### トップページ
@@ -45,7 +46,7 @@ Laravel初学者の山川権一郎です。
 <img src="https://github.com/user-attachments/assets/a0fbdd0d-7a70-4a3c-9dc0-bd9027fac5c2" width=700>
 </div>
 <div>
-<div class="image-text">モバイル</div>
+<div class="image-text">スマホ</div>
 <img src="https://github.com/user-attachments/assets/92a84edd-ad0f-4663-8114-9aa7894244fd" width=250>
 </div>
 
@@ -55,7 +56,7 @@ Laravel初学者の山川権一郎です。
 <img src="https://github.com/user-attachments/assets/2357d29a-8c2d-49e0-a6ee-1e651b0d20b4" width=700>
 </div>
 <div>
-<div class="image-text">モバイル</div>
+<div class="image-text">スマホ</div>
 <img src="https://github.com/user-attachments/assets/ce91cda1-031e-4c4e-9481-cbf9c6c5e769" width=250>
 </div>
 
@@ -65,7 +66,7 @@ Laravel初学者の山川権一郎です。
 <img src="https://github.com/user-attachments/assets/fa409f2c-58bb-4a88-a9ec-01fe417b49a1" width=700>
 </div>
 <div>
-<div class="image-text">モバイル</div>
+<div class="image-text">スマホ</div>
 <img src="https://github.com/user-attachments/assets/543fe5b4-e27d-4a17-b53b-9447c8b04606" width=250>
 </div>
 
@@ -75,7 +76,7 @@ Laravel初学者の山川権一郎です。
 <img src="https://github.com/user-attachments/assets/c2b8da5d-5298-430d-91e7-fd008f3cd749" width=700>
 </div>
 <div>
-<div class="image-text">モバイル</div>
+<div class="image-text">スマホ</div>
 <img src="https://github.com/user-attachments/assets/be6b17d3-a8f5-4277-9a64-b9c8f9809332" width=250>
 </div>
 
@@ -85,7 +86,7 @@ Laravel初学者の山川権一郎です。
 <img src="https://github.com/user-attachments/assets/36c35062-6d69-483e-a619-8cc3e84105f7" width=700>
 </div>
 <div>
-<div class="image-text">モバイル</div>
+<div class="image-text">スマホ</div>
 <img src="https://github.com/user-attachments/assets/67217671-e9a7-4a6b-9328-9ab220b5fdd7" width=200>
 </div>
 
@@ -95,7 +96,7 @@ Laravel初学者の山川権一郎です。
 <img src="https://github.com/user-attachments/assets/972ba222-edbb-41ee-af61-1406c8433069" width=700>
 </div>
 <div>
-<div class="image-text">モバイル</div>
+<div class="image-text">スマホ</div>
 <img src="https://github.com/user-attachments/assets/e93b440c-504d-41d9-971e-715ed03e765f" width=200>
 </div>
 
@@ -105,12 +106,12 @@ Laravel初学者の山川権一郎です。
 <img src="https://github.com/user-attachments/assets/ff4abd95-89b0-4387-b4c9-230418480a53" width=700>
 </div>
 <div>
-<div class="image-text">モバイル</div>
+<div class="image-text">スマホ</div>
 <img src="https://github.com/user-attachments/assets/2d94dc72-a2c0-4265-8a47-ccc0b58451b8" width=250>
 </div>
 
 # 2. 使用技術
-ネイティブアプリは登録費・維持費とストア検査がありすぐに変更を反映できないと思いwebアプリにした
+ネイティブアプリは登録費・維持費がかかったり、ストア検査がありすぐに変更を反映できないと思いwebアプリにしました。
 ## 2-1. ディレクトリ構造
 ```
 【ルートディレクトリ】
@@ -144,7 +145,9 @@ Laravel初学者の山川権一郎です。
 - Linux(WSL2)
 
 ## 2-6. 本番環境
-- 
+- Amazon Lightsail(LAMP_PHP_8-1)
+- Apache
+- MySQL
 
 ## 2-7. パッケージ管理
 ### Composer
@@ -261,10 +264,11 @@ Google Geminiは、AI技術に関連したGoogleの取り組みの一環で、�
 ## 2-9. その他使用ツール
 - draw.io（画面遷移図・ER図作成）
 - Microsoft Designer（ロゴ製作）
+- Notion（コマンド管理）
 
 # 3. 機能一覧
 ## 3-1. メイン機能
-- メモ投稿機能(CRUD)
+- メモ投稿機能(作成・編集・削除)
 - AIによるメモ自動生成機能(Gemini)
 - 画像アップロード機能(Cloudinary)
 - ページネーション機能
@@ -285,19 +289,22 @@ Google Geminiは、AI技術に関連したGoogleの取り組みの一環で、�
 ## 3-3. 非機能
 - レスポンシブWEBデザイン
 
-## 3-4. インフラ
-- 
+<!-- ## 3-4. インフラ
+-  -->
 
 # 4. 基本設計
 ## 4-1. ワイヤーフレーム
+リンク先：ポートフォリオ.drawio
 https://drive.google.com/file/d/10Zck4wBCw5BVnt5IF9lE4vdTfUwd1JH-/view?usp=sharing
 
 ## 4-2. 画面遷移図
+リンク先：ポートフォリオ.drawio
 https://drive.google.com/file/d/10Zck4wBCw5BVnt5IF9lE4vdTfUwd1JH-/view?usp=sharing
 
 ## 4-3. 開発環境
 - 開発環境：`Docker/compose`
 - バージョン管理：`GitHub`
+- テスト：`PHPUnit/GitHub Actions`
 - 開発ツール：`VScode`
   <details><summary>VScodeプラグイン</summary>
   <ul>
@@ -322,133 +329,68 @@ https://drive.google.com/file/d/10Zck4wBCw5BVnt5IF9lE4vdTfUwd1JH-/view?usp=shari
 |phpmyadmin|db管理|
 
 ## 4-4. 本番環境
-- 
-
-<!-- ![aws](https://user-images.githubusercontent.com/68370181/178103075-eec5508a-4d29-409c-84f4-3f687fa9cd5d.png) -->
-
-|key|value|
-|:--|:--|
-<!-- |CloudFormation|環境構築|
-|VPC|サブネット(EC2 / RDS)|
-|EC2|nginx / php-fpm(public subnet 1a,1c)|
-|RDS|MySQL(private subnet 1a,1c)|
-|S3|画像用ストレージ|
-|Route53|DNSレコード管理|
-|ALB|ロードバランサー|
-|ACM|SSL証明書取得(HTTPS化)|
-|SNS|Slackデプロイ通知|
-|Chatbot|Slackデプロイ通知|
-|CircleCI|自動デプロイ|
-|CodeDeploy|自動デプロイ|
-|IAM|権限付与|
-|CloudWatch|料金確認| -->
+リンク先：ポートフォリオ.drawio
+https://drive.google.com/file/d/10Zck4wBCw5BVnt5IF9lE4vdTfUwd1JH-/view?usp=sharing
 
 ## 4-5. ER図
+リンク先：ポートフォリオ.drawio
 https://drive.google.com/file/d/10Zck4wBCw5BVnt5IF9lE4vdTfUwd1JH-/view?usp=sharing
 
 ## 4-6. テーブル定義書
+リンク先：ポートフォリオ.drawio
 https://drive.google.com/file/d/10Zck4wBCw5BVnt5IF9lE4vdTfUwd1JH-/view?usp=sharing
 
-## 4-7. issue
-https://github.com/yamakawakenichiro/gourmet-project/issues
-
-## 4-8. Git-Flow
-<!-- https://qiita.com/mint__/items/bfc58589b5b1e0a1856a -->
-
 ## 4-9. 開発期間
-- 要件定義から約2カ月間<br>
+- 学習開始から約2カ月間<br>
 ![image.png](https://github.com/user-attachments/assets/00ebdac6-e200-4885-a93f-b612ebcc46b7)
 
-
 # 5. 困難だったこと
-## 5-1. 基本設計
-<!-- - 機能一覧から画面遷移図/テーブル定義書/ER図を作成
-- ER図・AWS構成図をdraw.ioで作成 -->
-
-## 5-2. Laravel
-- Blade Components
-
-## 5-3. CI/CD
-<!-- - config.ymlの書き方
-
-https://qiita.com/kazumakishimoto/items/6aac32725ebea25acf35 -->
-
-## 5-4. AWS
-<!-- ### EC2
-- php-fpmやNginxのファイル設定
-- Linuxユーザー権限
-- EC2上のLaravelやNginxのエラーログ理解 -->
-
-### ALB/ACM
-<!-- - Laravel側のHTTPS化設定 -->
-
-### CircleCI/CodeDeploy
-<!-- - サブディレクトリのデプロイ設定(config.ymlのworking_directory設定)
-- permissionエラー(.circleciディレクトリの権限)
-- ヘルスチェックエラー(ターゲットグループの設定) -->
-
-### SNS/Chatbot
-<!-- - Chatbotに`ServiceLinkedRole`のインラインポリシー作成 -->
-
-### フロント
-- tailwindcss
+## ソース管理（Git）
+- ブランチをmainではなく、別のブランチから作成してしまったりと、ブランチの扱いに苦労した。
+- LinuxとWindowsではファイルのパーミッションの扱いが異なるため、自動でファイルが変更されてしまうことを知らず、苦労した。
+- 参考書やサイトで学習し、実際に使用しながらgitの扱いに慣れた。
+## Blade Componentsの構造
+- フロント製作に入り、何から手を付ければいいのか分からなかった。
+- Breezeインストールによって作成された、blade.phpファイルを見て、Blade Componentsの仕組みを学習した。
+## Tailwind CSS
+- フロントのファイルの構造は理解したものの、どのように装飾するか全く分からなかった。
+- ネット上にあるLaravelを使用して作成されたサイトを探し、デベロッパーツールでどのようにTailwind CSSを記入しているのか、実際に見ながら学んだ。
 
 # 6. 意識したこと
-## 6-1. ソース管理
+## ソース管理（Git）
 - コミットメッセージのルール化
-- 
-
-## 6-. セキュリティ
+- featやfix、docs、styleなどのタグを冒頭に付け、○○のため○○したという文言に統一した。
 
 # 7. 課題
-- 位置情報から店名自動入力
-- SNSシェア機能
-- 英語学習（情報収集のため）
+- 位置情報から店名・メニュー自動入力
+- ユーザーへのおすすめ店・メニューの提案
 
 # 8. 作者
 |key|value|
 |---|-----|
 |名前|山川権一郎(やまかわけんいちろう)|
 |住所|東京都|
-|ポートフォリオ|[**グルメモ**](https://)|
+|ポートフォリオ|[**グルメモ**](https://gour-memo.com)|
 |GitHub|[@yamakawakenichiro](https://github.com/yamakawakenichiro)|
 
 # 9. 教材
-## 9-1. 基本設計
-
-## 9-2. Git
+## Git
 https://amzn.asia/d/5Hd5Vh7
 
-https://qiita.com/konatsu_p/items/dfe199ebe3a7d2010b3e
-
-## 9-3. PHP
+## PHP
 https://amzn.asia/d/4NcQRM3
 
 https://newmonz.jp/lesson/php-basic/chapter-1
 
-## 9-4. JavaScript
-
-## 9-5. SQL
-
-## 9-6. CS
-
-## 9-7. Linux
-
-## 9-8. Laravel
+## Laravel
 https://amzn.asia/d/f7BSQvD
 
 https://newmonz.jp/lesson/laravel-basic/chapter-1
 
-## 9-9. Docker
+## Docker
 https://amzn.asia/d/eII2iIC
 
-## 9-10. AWS
-
-## 9-11. CircleCI
-
-## 9-12. 基本設計
-
-## 9-13. 参考ポートフォリオ
+## 参考ポートフォリオ
 https://qiita.com/kazumakishimoto/items/2ac669119c968e30ae37
 
 https://qiita.com/_reika0807/items/f8d7d7a4a1a3345fb2e4
