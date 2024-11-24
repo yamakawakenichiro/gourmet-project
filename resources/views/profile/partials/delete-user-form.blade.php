@@ -50,7 +50,7 @@
                     {{ __('Cancel') }}
                 </x-secondary-button>
 
-                <x-danger-button class="ms-3">
+                <x-danger-button class="ms-3" onclick="handleLogout();">
                     {{ __('Delete Account') }}
                 </x-danger-button>
             </div>
