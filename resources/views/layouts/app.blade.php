@@ -21,6 +21,7 @@
     'resources/css/pagination.css',
     'resources/js/app.js',
     ])
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body class="font-sans antialiased min-h-screen bg-gray-100"">
@@ -51,6 +52,20 @@
             <p class="my-3 text-gray-900 text-sm">&copy; 2024 Yamakawa</p>
         </footer>
     </div>
+
+    <script>
+        function handleLogout() {
+            if (gapi.auth2) {
+                gapi.auth2.getAuthInstance().signOut().then(() => {
+                    console.log('Googleアカウントからログアウトしました');
+                }).catch((error) => {
+                    console.error('Googleログアウト中にエラーが発生しました:', error);
+                });
+            } else {
+                console.warn('Google APIライブラリがロードされていません');
+            }
+        }
+    </script>
 </body>
 
 </html>

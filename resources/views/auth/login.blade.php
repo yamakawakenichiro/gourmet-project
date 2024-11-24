@@ -39,6 +39,7 @@
                 <span>Googleでログイン</span>
             </a>
         </div>
+        <x-input-error :messages="$errors->get('email_google')" class="mt-2" />
 
         <div class="flex items-center justify-end mt-4">
             @if (Route::has('password.request'))

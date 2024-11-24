@@ -37,7 +37,7 @@
                         console.log(mapLatLng);
                         // マップオプションを変数に格納
                         var mapOptions = {
-                            zoom: 13, // 拡大倍率
+                            zoom: 17, // 拡大倍率
                             center: mapLatLng // 緯度・経度
                         };
                         // マップオブジェクト作成

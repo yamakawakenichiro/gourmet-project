@@ -20,6 +20,16 @@ class GoogleLoginController extends Controller
     {
         $googleUser = Socialite::driver('google')->stateless()->user();
 
+        // 既に同じメールアドレスで登録されているか確認
+        $existingUser = User::where('email', $googleUser->email)->first();
+
+        if ($existingUser) {
+            // メールアドレスが既に登録されている場合
+            return redirect()->route('login')->withErrors([
+                'email_google' => 'このメールアドレスは既に登録されています。メールアドレスとパスワードを入力してログインしてください。'
+            ]);
+        }
+
         $user = User::firstOrCreate([ //指定された条件に一致する最初のレコードを取得します。もしレコードが存在しない場合、新しいレコードを作成します。
             'google_id' => $googleUser->id //意味: Googleから取得したidを基に、ユーザーの存在を確認します。
         ], [ //上が実行されるから、'email_verified_at'に値が入らずnullになる。
