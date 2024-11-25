@@ -43,6 +43,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/')->with('message', 'ログアウトしました');
+        return redirect('/')->with([
+            'message' => 'ログアウトしました',
+            'google_logout' => true
+        ]);
     }
 }

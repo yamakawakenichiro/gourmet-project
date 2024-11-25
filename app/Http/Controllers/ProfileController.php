@@ -57,6 +57,9 @@ class ProfileController extends Controller
         $request->session()->invalidate(); // Laravelアプリ内のセッションデータを無効化するだけで、Googleアカウントのログアウトはできません。
         $request->session()->regenerateToken();
 
-        return Redirect::to('/')->with('message', 'アカウントを削除しました');
+        return Redirect::to('/')->with([
+            'message' => 'アカウントを削除しました',
+            'google_logout' => true
+        ]);
     }
 }
