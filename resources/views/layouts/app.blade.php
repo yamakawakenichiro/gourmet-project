@@ -21,7 +21,7 @@
     'resources/css/pagination.css',
     'resources/js/app.js',
     ])
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 
 <body class="font-sans antialiased min-h-screen bg-gray-100"">
@@ -53,19 +53,25 @@
         </footer>
     </div>
 
+    @if(session('google_logout'))
     <script>
-        function handleLogout() {
-            if (gapi.auth2) {
-                gapi.auth2.getAuthInstance().signOut().then(() => {
-                    console.log('Googleアカウントからログアウトしました');
-                }).catch((error) => {
-                    console.error('Googleログアウト中にエラーが発生しました:', error);
-                });
-            } else {
-                console.warn('Google APIライブラリがロードされていません');
+        // スクリプトが完全にロードされてから実行
+        window.onload = function() {
+            function signOutFromGoogle() {
+                // 自動サインインを無効化する
+                if (google && google.accounts && google.accounts.id) {
+                    google.accounts.id.disableAutoSelect();
+                    console.log('User signed out from Google.');
+                } else {
+                    console.error('Google API not loaded correctly.');
+                }
             }
-        }
+
+            // すぐにサインアウトを実行
+            signOutFromGoogle();
+        };
     </script>
+    @endif
 </body>
 
 </html>

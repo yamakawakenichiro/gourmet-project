@@ -20,8 +20,10 @@ class GoogleLoginController extends Controller
     {
         $googleUser = Socialite::driver('google')->stateless()->user();
 
-        // 既に同じメールアドレスで登録されているか確認
-        $existingUser = User::where('email', $googleUser->email)->first();
+        // 既に同じメールアドレスで登録されているか確認 (google_idがnullの場合のみ)
+        $existingUser = User::where('email', $googleUser->email)
+            ->whereNull('google_id')
+            ->first();
 
         if ($existingUser) {
             // メールアドレスが既に登録されている場合
